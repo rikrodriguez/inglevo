@@ -113,7 +113,7 @@ export default async function AdminPage() {
         />
       </section>
 
-      <section className="grid gap-5">
+      <section id="marketing-analytics" className="grid gap-5">
         <div className="flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
             <p className="text-sm font-medium text-muted-foreground">Funnel</p>

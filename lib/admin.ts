@@ -19,38 +19,6 @@ export type InternalEvent = {
   created_at: string;
 };
 
-export type AnalyticsSummary = {
-  eventCount: number;
-  pageViews: number;
-  visitors: number;
-  sessions: number;
-  ctaClicks: number;
-  conversionEvents: number;
-  topPages: Array<{ label: string; value: number; detail?: string }>;
-  topCtas: Array<{ label: string; value: number; detail?: string }>;
-  topSources: Array<{ label: string; value: number; detail?: string }>;
-  recentEvents: Array<{
-    id: string;
-    eventName: string;
-    path: string;
-    label: string;
-    createdAt: string;
-  }>;
-};
-
-const emptyAnalyticsSummary: AnalyticsSummary = {
-  eventCount: 0,
-  pageViews: 0,
-  visitors: 0,
-  sessions: 0,
-  ctaClicks: 0,
-  conversionEvents: 0,
-  topPages: [],
-  topCtas: [],
-  topSources: [],
-  recentEvents: [],
-};
-
 const conversionEventNames = new Set([
   "signup_started",
   "signup_completed",
@@ -129,7 +97,7 @@ function toTopItems(map: Map<string, { value: number; detail?: string }>) {
     .slice(0, 8);
 }
 
-function getAnalyticsSummary(events: InternalEvent[]): AnalyticsSummary {
+function getAnalyticsSummary(events: InternalEvent[]) {
   const visitors = new Set<string>();
   const sessions = new Set<string>();
   const pages = new Map<string, { value: number; detail?: string }>();
@@ -205,56 +173,6 @@ function getAnalyticsSummary(events: InternalEvent[]): AnalyticsSummary {
       label: metadataString(event.metadata, "label", ""),
       createdAt: event.created_at,
     })),
-  };
-}
-
-export async function getMarketingAnalyticsData() {
-  const admin = await getAdminState();
-  const supabase = createSupabaseAdminClient();
-
-  if (!supabase) {
-    return {
-      admin,
-      analytics: emptyAnalyticsSummary,
-      status: "supabase_not_configured" as const,
-    };
-  }
-
-  if (!admin.isConfigured) {
-    return {
-      admin,
-      analytics: emptyAnalyticsSummary,
-      status: "admin_not_configured" as const,
-    };
-  }
-
-  if (!admin.isAdmin) {
-    return {
-      admin,
-      analytics: emptyAnalyticsSummary,
-      status: "restricted" as const,
-    };
-  }
-
-  const analyticsEventsResult = await supabase
-    .from("internal_events")
-    .select("*")
-    .eq("route", "analytics")
-    .order("created_at", { ascending: false })
-    .limit(500);
-
-  if (analyticsEventsResult.error) {
-    return {
-      admin,
-      analytics: emptyAnalyticsSummary,
-      status: "events_table_missing" as const,
-    };
-  }
-
-  return {
-    admin,
-    analytics: getAnalyticsSummary((analyticsEventsResult.data ?? []) as InternalEvent[]),
-    status: "ready" as const,
   };
 }
 

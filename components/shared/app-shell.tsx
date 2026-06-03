@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   Award,
-  BarChart3,
   BookOpen,
   ClipboardList,
   Compass,
@@ -28,7 +27,6 @@ const navItems = [
   { href: "/for-employers", label: "Employers", icon: Compass },
 ];
 
-const analyticsNavItem = { href: "/app/analytics", label: "Analytics", icon: BarChart3 };
 const settingsNavItem = { href: "/app/settings", label: "Settings", icon: Settings };
 const adminNavItem = { href: "/app/admin", label: "Admin", icon: Shield };
 
@@ -43,10 +41,8 @@ export function AppShell({
   isDemoMode: boolean;
   isAdmin?: boolean;
 }) {
-  const shouldShowAnalytics = isAdmin || isDemoMode;
   const visibleNavItems = [
     ...navItems,
-    ...(shouldShowAnalytics ? [analyticsNavItem] : []),
     settingsNavItem,
     ...(isAdmin ? [adminNavItem] : []),
   ];
