@@ -1,5 +1,5 @@
-import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingNav } from "@/components/landing/landing-nav";
+import { PublicFooter } from "@/components/shared/public-footer";
 
 export default function AboutPage() {
   return (
@@ -31,7 +31,7 @@ export default function AboutPage() {
           ))}
         </section>
       </main>
-      <LandingFooter />
+      <PublicFooter />
     </>
   );
 }

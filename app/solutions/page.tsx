@@ -6,7 +6,8 @@ import {
   EmployerDashboardMockup,
   RolePathCardsMockup,
 } from "@/components/landing/product-mockups";
-import { SiteFooter, SiteHeader } from "@/components/shared/site-header";
+import { PublicFooter } from "@/components/shared/public-footer";
+import { SiteHeader } from "@/components/shared/site-header";
 import { Button } from "@/components/ui/button";
 
 const outcomes = [
@@ -86,7 +87,7 @@ export default function SolutionsPage() {
           <EmployerDashboardMockup />
         </section>
       </main>
-      <SiteFooter />
+      <PublicFooter />
     </>
   );
 }

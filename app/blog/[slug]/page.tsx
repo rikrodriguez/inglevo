@@ -3,8 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Search } from "lucide-react";
 
-import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingNav } from "@/components/landing/landing-nav";
+import { PublicFooter } from "@/components/shared/public-footer";
 import { Button } from "@/components/ui/button";
 import { blogPosts, getBlogPost, getRelatedPosts } from "@/data/blog-posts";
 import { getSiteUrl } from "@/lib/site-url";
@@ -284,7 +284,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
         </section>
       </main>
-      <LandingFooter />
+      <PublicFooter />
     </>
   );
 }

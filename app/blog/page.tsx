@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Search, Sparkles } from "lucide-react";
 
-import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingNav } from "@/components/landing/landing-nav";
+import { PublicFooter } from "@/components/shared/public-footer";
 import { Button } from "@/components/ui/button";
 import { blogClusters, blogPosts, featuredBlogPosts } from "@/data/blog-posts";
 
@@ -149,7 +149,7 @@ export default function BlogPage() {
           </div>
         </section>
       </main>
-      <LandingFooter />
+      <PublicFooter />
     </>
   );
 }

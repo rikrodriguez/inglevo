@@ -1,4 +1,5 @@
-import { SiteFooter, SiteHeader } from "@/components/shared/site-header";
+import { PublicFooter } from "@/components/shared/public-footer";
+import { SiteHeader } from "@/components/shared/site-header";
 
 const sections = [
   {
@@ -57,7 +58,7 @@ export default function TermsPage() {
           </div>
         </section>
       </main>
-      <SiteFooter />
+      <PublicFooter />
     </>
   );
 }

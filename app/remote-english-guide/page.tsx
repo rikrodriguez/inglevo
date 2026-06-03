@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-import { LandingFooter } from "@/components/landing/landing-footer";
 import { LandingNav } from "@/components/landing/landing-nav";
+import { PublicFooter } from "@/components/shared/public-footer";
 import { Button } from "@/components/ui/button";
 
 const sections = [
@@ -42,7 +42,7 @@ export default function RemoteEnglishGuidePage() {
           ))}
         </section>
       </main>
-      <LandingFooter />
+      <PublicFooter />
     </>
   );
 }
