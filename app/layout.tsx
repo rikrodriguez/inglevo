@@ -23,6 +23,13 @@ export const metadata: Metadata = {
     "verified talent",
     "US remote opportunities",
   ],
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/icon.svg",
+  },
   alternates: {
     canonical: "/",
   },

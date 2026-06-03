@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Inglevo">
+  <defs>
+    <linearGradient id="inglevo-mark" x1="10" x2="54" y1="8" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7459f6" />
+      <stop offset="0.52" stop-color="#5fb7f7" />
+      <stop offset="1" stop-color="#de61bf" />
+    </linearGradient>
+    <filter id="soft-shadow" x="-12" y="-12" width="88" height="88" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#261657" flood-opacity="0.22" />
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#08080a" />
+  <rect x="6" y="6" width="52" height="52" rx="14" fill="url(#inglevo-mark)" filter="url(#soft-shadow)" />
+  <rect x="13" y="13" width="38" height="38" rx="10" fill="#fbfbfd" fill-opacity="0.96" />
+  <path
+    d="M25 20h15v6h-4v18h4v6H25v-6h4V26h-4z"
+    fill="#08080a"
+  />
+  <path
+    d="M39.5 36.8 45 31l3.4 3.2-8.9 9.6-5.4-5.6 3.2-3.1z"
+    fill="#7459f6"
+  />
+</svg>
