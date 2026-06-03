@@ -327,7 +327,7 @@ function HeroSection() {
             Built for LATAM talent pursuing US remote jobs paid in USD
           </div>
           <h1 className="mt-8 max-w-2xl text-6xl font-semibold leading-[0.95] tracking-[-0.07em] text-black sm:text-7xl lg:text-[5.8rem]">
-            Improve your English. Get verified. Access US remote jobs.
+            Become a stronger candidate for US remote jobs.
           </h1>
           <p className="mt-7 max-w-xl text-xl leading-8 text-neutral-700">
             Inglevo helps LATAM professionals adjust their role English, prove

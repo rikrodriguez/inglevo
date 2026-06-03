@@ -55,7 +55,7 @@ export default function ForTalentPage() {
                 Built for LATAM talent pursuing US remote jobs
               </p>
               <h1 className="mt-6 max-w-3xl text-5xl font-semibold leading-[0.95] tracking-[-0.07em] sm:text-7xl">
-                Become a stronger candidate for US remote jobs.
+                Improve your English. Get verified. Access US remote jobs.
               </h1>
               <p className="mt-7 max-w-2xl text-xl leading-8 text-neutral-700">
                 Improve your role English, verify your remote setup and tools,
