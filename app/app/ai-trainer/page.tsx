@@ -23,16 +23,16 @@ const trainerModules = [
   {
     title: "Speaking Confidence",
     copy: "Practice spoken role scenarios and build confidence for interviews and team calls.",
-    cta: "Coming soon",
+    cta: "Roadmap module",
     icon: Mic,
-    status: "Next",
+    status: "Roadmap",
   },
   {
     title: "Meeting Simulations",
     copy: "Prepare standups, client calls, support escalations and role-specific remote conversations.",
-    cta: "Coming soon",
+    cta: "Roadmap module",
     icon: Video,
-    status: "Soon",
+    status: "Roadmap",
   },
 ];
 

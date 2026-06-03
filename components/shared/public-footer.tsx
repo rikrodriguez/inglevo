@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Globe2, LineChart, Play } from "lucide-react";
+import { Mail } from "lucide-react";
 
 import { BrandLogo } from "@/components/shared/brand-logo";
 
@@ -65,13 +65,13 @@ export function PublicFooter() {
               We help LATAM talent get verified and connect with US companies
               for remote opportunities.
             </p>
-            <div className="mt-5 flex gap-3 text-neutral-600">
-              <span className="text-xs font-semibold">in</span>
-              <Globe2 className="size-4" />
-              <Play className="size-4" />
-              <span className="text-xs font-semibold">YT</span>
-              <LineChart className="size-4" />
-            </div>
+            <Link
+              href="mailto:hello@inglevo.com"
+              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-neutral-600 transition hover:text-black"
+            >
+              <Mail className="size-4" />
+              hello@inglevo.com
+            </Link>
           </div>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
             {footerColumns.map(({ title, links }) => (

@@ -30,7 +30,7 @@ export function EmployerSignalSection() {
             perform.
           </p>
           <button className="mt-8 rounded-full border border-border bg-white px-5 py-3 text-sm font-semibold text-muted-foreground">
-            Employer access coming soon
+            Employer pilots by request
           </button>
         </div>
         <div className="mockup-screen min-h-[420px]">

@@ -316,16 +316,16 @@ const marketingPages = {
     ],
     sections: [
       {
-        title: "Placeholder stories for beta",
-        copy: "Replace these with real user outcomes as soon as beta users complete the path.",
+        title: "Beta proof scenarios",
+        copy: "Use these examples to explain what Inglevo is designed to improve while public outcomes are still being collected.",
       },
       {
         title: "Show progress, not fake guarantees",
         copy: "Good proof should focus on stronger preparation, clearer signals and better application behavior.",
       },
       {
-        title: "Use real screenshots later",
-        copy: "The strongest social proof will be real profiles, CV improvements and interview confidence wins.",
+        title: "Publish real outcomes when available",
+        copy: "The strongest future proof will be real profiles, CV improvements and interview confidence wins from users who opt in.",
       },
     ],
   },
@@ -437,7 +437,7 @@ const marketingPages = {
       },
       {
         title: "Next step",
-        copy: "Replace this page with a real calendar or lead form when the sales process is ready.",
+        copy: "Send hiring context through the contact page and Inglevo will follow up with the right access path.",
       },
     ],
   },
@@ -456,7 +456,7 @@ const marketingPages = {
     ],
     sections: [
       {
-        title: "No open roles yet",
+        title: "Public hiring roadmap",
         copy: "This page is ready for future hiring. For now, reach out if you want to help build Inglevo.",
       },
       {

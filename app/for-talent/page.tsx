@@ -171,7 +171,7 @@ export default function ForTalentPage() {
                 <div key={role} className={`rounded-3xl border p-5 ${index === 0 ? "border-[#6f45dd]/25 bg-[linear-gradient(135deg,#f3efff,#ffffff)]" : "border-black/5 bg-white"}`}>
                   <p className="text-lg font-semibold tracking-[-0.04em]">{role}</p>
                   <p className="mt-2 text-xs font-black uppercase tracking-[0.12em] text-neutral-400">
-                    {index === 0 ? "Open path" : "Coming soon"}
+                    {index === 0 ? "Open path" : "Roadmap"}
                   </p>
                 </div>
               ))}

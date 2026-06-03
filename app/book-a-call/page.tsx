@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CalendarDays, Check, MessageSquareText, UsersRound } from "lucide-react";
+import { CalendarDays, Check, Mail, MessageSquareText, UsersRound } from "lucide-react";
 
 import { PublicFooter } from "@/components/shared/public-footer";
 import { PublicNav } from "@/components/shared/public-nav";
@@ -21,9 +21,9 @@ export default function BookACallPage() {
               and whether Inglevo access fits your team.
             </p>
             <Button asChild className="click-gradient-button mt-8 h-12 rounded-full px-7">
-              <Link href="/contact">
-                Contact Inglevo
-                <ArrowRight />
+              <Link href="mailto:hello@inglevo.com?subject=Inglevo%20hiring%20pilot%20call&body=Hi%20Inglevo%2C%0A%0AWe%20are%20hiring%20for%3A%0AHiring%20volume%3A%0ARoles%20or%20tools%20that%20matter%3A%0ATimeline%3A%0A%0A">
+                Request hiring call
+                <Mail />
               </Link>
             </Button>
           </div>
@@ -40,6 +40,7 @@ export default function BookACallPage() {
                 "English and tool signals that matter",
                 "Candidate volume and timeline",
                 "Best access model for your team",
+                "Next steps for an employer pilot",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3 rounded-2xl bg-[#f8f8f7] p-4 text-sm font-bold">
                   <Check className="size-4 text-[#6f45dd]" />

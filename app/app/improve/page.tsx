@@ -28,10 +28,10 @@ const modules = [
     title: "Speaking Confidence",
     description:
       "Practice spoken answers and improve clarity, confidence and structure.",
-    cta: "Coming soon / Voice practice next",
+    cta: "Roadmap module",
     icon: Mic,
     active: false,
-    status: "Next",
+    status: "Roadmap",
     score: null,
     next: "Spoken intro practice",
     time: "6 min",
@@ -53,10 +53,10 @@ const modules = [
     title: "Remote Work Communication",
     description:
       "Learn how to explain blockers, give updates, ask for clarification and communicate ownership.",
-    cta: "Coming soon",
+    cta: "Roadmap module",
     icon: Clock,
     active: false,
-    status: "Soon",
+    status: "Roadmap",
     score: null,
     next: "Status update",
     time: "5 min",
@@ -65,10 +65,10 @@ const modules = [
     title: "Salary & Negotiation English",
     description:
       "Practice how to discuss salary, rates and expectations without sounding insecure or aggressive.",
-    cta: "Coming soon",
+    cta: "Roadmap module",
     icon: TrendingUp,
     active: false,
-    status: "Soon",
+    status: "Roadmap",
     score: null,
     next: "Salary range answer",
     time: "6 min",
@@ -104,7 +104,7 @@ export default function ImproveEnglishPage() {
                 className={
                   module.active
                     ? "badge-ready"
-                    : module.status === "Next"
+                    : module.status === "Roadmap"
                       ? "badge-progress"
                       : "badge-pending"
                 }

@@ -50,7 +50,7 @@ export function RolePathsSection() {
               <div className="flex items-center justify-between gap-3">
                 <p className="text-sm font-semibold text-black">{path.focus}</p>
                 <span className={path.status === "active" ? "badge-ready" : "badge-pending"}>
-                  {path.status === "active" ? "Active" : "Coming soon"}
+                  {path.status === "active" ? "Active" : "Roadmap"}
                 </span>
               </div>
               <h3 className="mt-5 text-3xl font-semibold tracking-[-0.04em]">

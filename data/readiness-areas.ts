@@ -3,7 +3,7 @@ export type ReadinessArea = {
   name: string;
   description: string;
   metrics: string[];
-  cta: "Practice now" | "Start assessment" | "Coming soon";
+  cta: "Practice now" | "Start assessment" | "Roadmap";
   href?: string;
 };
 
@@ -75,6 +75,6 @@ export const readinessAreas: ReadinessArea[] = [
       "ownership",
       "proactive communication",
     ],
-    cta: "Coming soon",
+    cta: "Roadmap",
   },
 ];

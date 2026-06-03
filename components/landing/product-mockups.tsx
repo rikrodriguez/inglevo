@@ -349,7 +349,7 @@ export function RolePathCardsMockup() {
           <UsersRound className="size-5" />
           <p className="mt-8 text-xl font-semibold tracking-[-0.04em]">{role}</p>
           <p className={`mt-2 text-xs ${index === 0 ? "text-white/70" : "text-muted-foreground"}`}>
-            {index === 0 ? "Open path" : "Coming soon"}
+            {index === 0 ? "Open path" : "Roadmap"}
           </p>
         </div>
       ))}

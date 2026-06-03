@@ -31,13 +31,13 @@ import { Button } from "@/components/ui/button";
 import { OldNewWayToggle } from "@/components/landing/old-new-way-toggle";
 
 const logos = [
-  "Forbes",
-  "Business Insider",
-  "TechCrunch",
-  "Bloomberg",
-  "Yahoo Finance",
-  "Inc.",
-  "Fast Company",
+  "Role English",
+  "Remote Setup",
+  "Tool Signals",
+  "Verified Profile",
+  "Job CRM",
+  "Application Assets",
+  "Readiness Score",
 ] as const;
 
 const processSteps = [
@@ -45,7 +45,7 @@ const processSteps = [
   ["2", "Verify your remote setup", "We check your equipment, internet, workspace and availability.", "See details"],
   ["3", "Verify your role tools", "We verify the tools you use for your role and daily responsibilities.", "See details"],
   ["4", "Get your verified profile", "Receive your Inglevo profile and legally show it in your CV, LinkedIn and applications.", "See details"],
-  ["5", "HIRED", "Use stronger trust signals to stand out when US companies review LATAM candidates.", "Start path"],
+  ["5", "APPLY STRONGER", "Use stronger trust signals when US companies review LATAM candidates.", "Start path"],
 ] as const;
 
 const customerJourney = [
@@ -343,9 +343,9 @@ function HeroSection() {
             </Button>
           </div>
           <div className="mt-10 grid max-w-2xl gap-4 sm:grid-cols-3">
-            <MiniStat icon={<ShieldCheck />} value="10K+" label="Verified profiles" />
-            <MiniStat icon={<BriefcaseBusiness />} value="500+" label="Hiring teams" />
-            <MiniStat icon={<UsersRound />} value="100+" label="Roles supported" />
+            <MiniStat icon={<ShieldCheck />} value="Role-first" label="English practice" />
+            <MiniStat icon={<BriefcaseBusiness />} value="Setup" label="Readiness checks" />
+            <MiniStat icon={<UsersRound />} value="Tools" label="Signal layer" />
           </div>
         </div>
         <VerifiedProfileMockup />
@@ -370,37 +370,22 @@ function MiniStat({ icon, value, label }: { icon: ReactNode; value: string; labe
 
 function ProfilePhoto({ name, size = "md" }: { name: string; size?: "sm" | "md" | "lg" }) {
   const dimensions = size === "lg" ? "size-14" : size === "sm" ? "size-8" : "size-10";
-  const imageSize = size === "lg" ? 140 : size === "sm" ? 64 : 88;
-  const photoIds: Record<string, number> = {
-    "Ricardo Rodriguez": 12,
-    "Mariana Castillo": 32,
-    "Andres Morales": 15,
-    "Ana Torres": 47,
-    "Mateo Ruiz": 14,
-    "Camila Vega": 44,
-    "Camila R.": 45,
-    "David M.": 13,
-    "Andres P.": 33,
-    "Jessica L.": 48,
-    "Operations Lead": 18,
-    "Sofia Herrera": 46,
-    "Michael Brown": 20,
-    "Valeria Gomez": 49,
-    "Laura Chen": 36,
-    "Daniel Perez": 17,
-    "Rachel Adams": 29,
-  };
-  const photoId = photoIds[name] ?? 11;
+  const textSize = size === "lg" ? "text-lg" : size === "sm" ? "text-xs" : "text-sm";
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 
   return (
     <span
-      aria-label={`${name} profile photo`}
-      className={`relative block shrink-0 overflow-hidden rounded-full bg-[#f4f2ef] bg-cover bg-center shadow-sm ring-2 ring-white ${dimensions}`}
+      aria-label={`${name} example avatar`}
+      className={`relative grid shrink-0 place-items-center overflow-hidden rounded-full bg-[linear-gradient(135deg,#7459f6,#5fb7f7_52%,#de61bf)] font-black text-white shadow-sm ring-2 ring-white ${dimensions} ${textSize}`}
       role="img"
-      style={{
-        backgroundImage: `linear-gradient(135deg, rgba(208,245,227,0.08), rgba(111,69,221,0.06)), url("https://i.pravatar.cc/${imageSize}?img=${photoId}")`,
-      }}
     >
+      {initials || "IN"}
       <span className="absolute inset-0 rounded-full shadow-[inset_0_0_0_1px_rgba(0,0,0,0.06),inset_0_-8px_18px_rgba(0,0,0,0.08)]" />
     </span>
   );
@@ -491,9 +476,11 @@ function TrustLogos() {
   return (
     <section className="px-4 py-10 sm:px-6">
       <div className="mx-auto max-w-7xl text-center">
-        <p className="text-sm font-semibold text-neutral-500">As Seen on</p>
+        <p className="text-sm font-semibold text-neutral-500">
+          Signals Inglevo helps candidates build
+        </p>
         <div className="brand-marquee mt-8 overflow-hidden">
-          <div className="marquee-track flex w-max items-center gap-16 grayscale">
+          <div className="marquee-track flex w-max items-center gap-6">
             {[...logos, ...logos, ...logos].map((logo, index) => (
               <LogoWordmark key={`${logo}-${index}`} logo={logo} />
             ))}
@@ -505,66 +492,9 @@ function TrustLogos() {
 }
 
 function LogoWordmark({ logo }: { logo: (typeof logos)[number] }) {
-  if (logo === "Business Insider") {
-    return (
-      <span className="min-w-fit text-center font-serif text-[1.35rem] font-bold uppercase leading-[0.82] tracking-[0.12em] text-neutral-500">
-        Business
-        <br />
-        Insider
-      </span>
-    );
-  }
-
-  if (logo === "TechCrunch") {
-    return (
-      <span className="flex min-w-fit items-center gap-2 text-[1.45rem] font-extrabold tracking-[-0.05em] text-neutral-500">
-        <span className="grid size-5 place-items-center bg-neutral-500 text-[0.7rem] font-black text-white">
-          T
-        </span>
-        TechCrunch
-      </span>
-    );
-  }
-
-  if (logo === "Yahoo Finance") {
-    return (
-      <span className="min-w-fit text-center text-[1.65rem] font-black tracking-[-0.06em] text-neutral-500">
-        yahoo!
-        <span className="ml-1 align-middle text-[0.72rem] font-bold uppercase tracking-[-0.02em]">
-          finance
-        </span>
-      </span>
-    );
-  }
-
-  if (logo === "Inc.") {
-    return (
-      <span className="min-w-fit font-serif text-[2rem] font-black tracking-[-0.04em] text-neutral-500">
-        Inc.
-      </span>
-    );
-  }
-
-  if (logo === "Fast Company") {
-    return (
-      <span className="min-w-fit font-serif text-[1.65rem] font-bold tracking-[-0.08em] text-neutral-500">
-        FAST
-        <span className="ml-1 font-normal">COMPANY</span>
-      </span>
-    );
-  }
-
-  if (logo === "Bloomberg") {
-    return (
-      <span className="min-w-fit text-[1.55rem] font-bold tracking-[-0.045em] text-neutral-500">
-        Bloomberg
-      </span>
-    );
-  }
-
   return (
-    <span className="min-w-fit font-serif text-[2rem] font-bold tracking-[-0.06em] text-neutral-500">
-      Forbes
+    <span className="min-w-fit rounded-full border border-black/5 bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-neutral-500 shadow-sm">
+      {logo}
     </span>
   );
 }
@@ -873,7 +803,7 @@ function ProcessSection() {
               <span className={`grid size-12 place-items-center rounded-full text-sm font-semibold text-white shadow-lg ${index === 0 ? "bg-[#6f45dd]" : index === 1 ? "bg-[#5f8ef7]" : index === 2 ? "bg-emerald-500" : index === 3 ? "bg-[#58b98f]" : "bg-[linear-gradient(135deg,#7459f6,#5fb7f7,#de61bf)]"}`}>
                 {number}
               </span>
-              <h3 className={`mt-8 font-semibold leading-tight tracking-[-0.04em] ${title === "HIRED" ? "text-xl text-[#6f45dd]" : "text-base"}`}>{title}</h3>
+              <h3 className={`mt-8 font-semibold leading-tight tracking-[-0.04em] ${title === "APPLY STRONGER" ? "text-xl text-[#6f45dd]" : "text-base"}`}>{title}</h3>
               <p className="mt-3 text-sm leading-6 text-neutral-600">{copy}</p>
               <Link href="/signup" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#4f46e5]">
                 {cta}
@@ -1915,17 +1845,17 @@ function TestimonialsSection() {
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-500">
-              Success stories
+              Beta proof scenarios
             </p>
             <h2 className="mt-4 max-w-xl text-4xl font-semibold leading-[0.98] tracking-[-0.065em] sm:text-6xl">
-              A love wall from talents and hiring teams.
+              The proof we are building with early candidates.
             </h2>
           </div>
           <div className="lg:justify-self-end">
             <p className="max-w-xl text-lg leading-8 text-neutral-600">
-              Real outcomes will be added as the beta grows. For now, this wall
-              shows the kind of proof Inglevo is designed to create: confidence,
-              stronger profiles and faster hiring context.
+              These are illustrative beta scenarios that show the outcomes
+              Inglevo is designed to support: clearer communication, stronger
+              profiles and better hiring context.
             </p>
             <Link href="/success-stories" className="mt-5 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_18px_50px_rgba(30,27,75,0.08)]">
               View all stories
@@ -1944,10 +1874,10 @@ function TestimonialsSection() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_18%,rgba(255,255,255,0.28),transparent_28%),radial-gradient(circle_at_82%_72%,rgba(255,255,255,0.18),transparent_32%)]" />
                 <div className="relative flex items-center justify-between">
                   <span className="rounded-full bg-white/16 px-3 py-1.5 text-xs font-black uppercase tracking-[0.12em] backdrop-blur">
-                    Video story
+                    Beta scenario
                   </span>
                   <span className="rounded-full bg-black/18 px-3 py-1.5 text-xs font-bold backdrop-blur">
-                    {story.duration}
+                    {story.role}
                   </span>
                 </div>
                 <div className="relative mt-14 flex items-end justify-between gap-4">
@@ -1957,13 +1887,9 @@ function TestimonialsSection() {
                       {story.title}
                     </h3>
                   </div>
-                  <button
-                    aria-label={`Play ${story.name} video testimonial`}
-                    className="grid size-14 shrink-0 place-items-center rounded-full bg-white text-black shadow-[0_16px_45px_rgba(0,0,0,0.22)] transition group-hover:scale-105"
-                    type="button"
-                  >
-                    <Video className="size-5" />
-                  </button>
+                  <span className="grid size-14 shrink-0 place-items-center rounded-full bg-white text-black shadow-[0_16px_45px_rgba(0,0,0,0.22)]">
+                    <BadgeCheck className="size-5" />
+                  </span>
                 </div>
               </div>
               <div className="p-5">
@@ -1998,10 +1924,11 @@ function TestimonialsSection() {
                 }`}>
                   {story.tag}
                 </span>
-                <div className="flex gap-1 text-[#f7b500]">
-                  {Array.from({ length: 5 }).map((_, starIndex) => (
-                    <Star key={starIndex} className="size-3 fill-current" />
-                  ))}
+                <div className="flex items-center gap-1 text-[#6f45dd]">
+                  <Star className="size-3 fill-current" />
+                  <span className="text-xs font-black uppercase tracking-[0.1em]">
+                    Example
+                  </span>
                 </div>
               </div>
 
@@ -2038,6 +1965,10 @@ function TestimonialsSection() {
             ))}
           </div>
         </div>
+        <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-5 text-neutral-500">
+          Examples are illustrative until public beta outcomes are published.
+          Inglevo does not guarantee jobs, interviews, visas, sponsorship or income.
+        </p>
       </div>
     </section>
   );

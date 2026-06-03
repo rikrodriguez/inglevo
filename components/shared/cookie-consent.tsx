@@ -1,21 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useSyncExternalStore } from "react";
 
 import { analyticsConsentKey } from "@/components/shared/analytics-provider";
 import { Button } from "@/components/ui/button";
 
+function subscribe(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener("inglevo:analytics-consent", onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener("inglevo:analytics-consent", onStoreChange);
+  };
+}
+
+function getConsentSnapshot() {
+  return window.localStorage.getItem(analyticsConsentKey) ?? "pending";
+}
+
+function getServerSnapshot() {
+  return "hidden";
+}
+
 export function CookieConsent() {
-  const [visible, setVisible] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      !window.localStorage.getItem(analyticsConsentKey)
+  const consent = useSyncExternalStore(
+    subscribe,
+    getConsentSnapshot,
+    getServerSnapshot
   );
+  const visible = consent === "pending";
 
   function setConsent(value: "accepted" | "declined") {
     window.localStorage.setItem(analyticsConsentKey, value);
     window.dispatchEvent(new Event("inglevo:analytics-consent"));
-    setVisible(false);
   }
 
   if (!visible) {
@@ -28,8 +46,8 @@ export function CookieConsent() {
         <div>
           <p className="font-semibold">Help us improve Inglevo</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Usamos analytics y pixels opcionales para entender uso del producto y
-            measure campaigns. We do not load these scripts until you accept.
+            We use optional analytics and pixels to understand product usage and
+            campaign performance. We do not load them until you accept.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
