@@ -29,6 +29,13 @@ function getFeedbackSummary(feedback: unknown) {
   return "No feedback summary available.";
 }
 
+function formatLeadMagnet(value: string) {
+  return value
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
 export default async function AdminPage() {
   const { admin, data } = await getAdminDashboardData();
 
@@ -72,6 +79,13 @@ export default async function AdminPage() {
         </div>
       ) : null}
 
+      {data.missingTables.leadMagnetLeads ? (
+        <div className="rounded-2xl border border-[#dfdbd6] bg-[#dfdbd6] p-4 text-sm text-black">
+          Apply `supabase/migrations/011_lead_magnet_leads.sql` to store blog
+          lead magnet email captures.
+        </div>
+      ) : null}
+
       <section className="grid gap-4 md:grid-cols-4">
         <MetricCard
           label="Auth users"
@@ -95,7 +109,7 @@ export default async function AdminPage() {
         />
       </section>
 
-      <section className="grid gap-4 md:grid-cols-3">
+      <section className="grid gap-4 md:grid-cols-4">
         <MetricCard
           label="Readiness assessments"
           value={data.totals.readinessAssessments}
@@ -110,6 +124,11 @@ export default async function AdminPage() {
           label="Internal events"
           value={data.totals.internalEvents}
           detail="OpenAI errors and system warnings"
+        />
+        <MetricCard
+          label="Lead magnets"
+          value={data.totals.leadMagnetLeads}
+          detail="Blog email captures"
         />
       </section>
 
@@ -197,6 +216,61 @@ export default async function AdminPage() {
             </tbody>
           </table>
         </div>
+      </section>
+
+      <section className="overflow-x-auto rounded-2xl border border-border bg-white p-6 shadow-sm">
+        <div className="flex flex-col justify-between gap-3 md:flex-row md:items-end">
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">Blog funnel</p>
+            <h2 className="mt-1 text-xl font-semibold">Lead magnet captures</h2>
+            <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
+              Emails captured from the blog resources: Remote Interview English
+              Cheat Sheet and LATAM Remote Job CV Checklist.
+            </p>
+          </div>
+          <span className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
+            Latest {data.leadMagnetLeads.length} leads
+          </span>
+        </div>
+
+        <table className="mt-5 w-full min-w-[860px] text-left text-sm">
+          <thead className="text-muted-foreground">
+            <tr className="border-b border-border">
+              <th className="py-3 pr-4 font-medium">Email</th>
+              <th className="py-3 pr-4 font-medium">Lead magnet</th>
+              <th className="py-3 pr-4 font-medium">Role</th>
+              <th className="py-3 pr-4 font-medium">Source</th>
+              <th className="py-3 pr-4 font-medium">Captured</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.leadMagnetLeads.length ? (
+              data.leadMagnetLeads.map((lead) => (
+                <tr key={lead.id} className="border-b border-border/70">
+                  <td className="py-3 pr-4 font-medium">{lead.email}</td>
+                  <td className="py-3 pr-4 text-muted-foreground">
+                    {formatLeadMagnet(lead.lead_magnet)}
+                  </td>
+                  <td className="py-3 pr-4 text-muted-foreground">
+                    {lead.role || "-"}
+                  </td>
+                  <td className="py-3 pr-4 text-muted-foreground">
+                    {lead.source_path || "-"}
+                  </td>
+                  <td className="py-3 pr-4 text-muted-foreground">
+                    {formatDate(lead.created_at)}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td className="py-5 pr-4 text-muted-foreground" colSpan={5}>
+                  No lead magnet captures yet.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </section>
 
       <section className="rounded-2xl border border-border bg-white p-6 shadow-sm">

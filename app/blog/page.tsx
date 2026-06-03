@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, Search, Sparkles } from "lucide-react";
 
 import { LandingNav } from "@/components/landing/landing-nav";
+import { LeadMagnetForm } from "@/components/lead-magnet/lead-magnet-form";
 import { PublicFooter } from "@/components/shared/public-footer";
 import { Button } from "@/components/ui/button";
 import { blogClusters, blogPosts, featuredBlogPosts } from "@/data/blog-posts";
@@ -104,6 +105,10 @@ export default function BlogPage() {
               </Link>
             ))}
           </div>
+        </section>
+
+        <section className="mx-auto mt-16 max-w-7xl">
+          <LeadMagnetForm sourcePath="/blog" />
         </section>
 
         <section className="mx-auto mt-16 max-w-7xl">

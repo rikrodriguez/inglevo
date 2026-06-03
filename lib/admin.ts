@@ -19,6 +19,16 @@ export type InternalEvent = {
   created_at: string;
 };
 
+export type LeadMagnetLead = {
+  id: string;
+  email: string;
+  lead_magnet: string;
+  role: string | null;
+  source_path: string | null;
+  utm_source: string | null;
+  created_at: string;
+};
+
 const conversionEventNames = new Set([
   "signup_started",
   "signup_completed",
@@ -198,6 +208,7 @@ export async function getAdminDashboardData() {
     assetsResult,
     eventsResult,
     analyticsEventsResult,
+    leadMagnetLeadsResult,
   ] = await Promise.all([
     supabase.auth.admin.listUsers({ page: 1, perPage: 100 }),
     supabase.from("profiles").select("*").order("created_at", { ascending: false }),
@@ -232,6 +243,11 @@ export async function getAdminDashboardData() {
       .eq("route", "analytics")
       .order("created_at", { ascending: false })
       .limit(500),
+    supabase
+      .from("lead_magnet_leads")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(50),
   ]);
 
   const users = usersResult.data.users;
@@ -242,6 +258,7 @@ export async function getAdminDashboardData() {
   const assets = (assetsResult.data ?? []) as RemoteJobAsset[];
   const internalEvents = (eventsResult.data ?? []) as InternalEvent[];
   const analyticsEvents = (analyticsEventsResult.data ?? []) as InternalEvent[];
+  const leadMagnetLeads = (leadMagnetLeadsResult.data ?? []) as LeadMagnetLead[];
   const sessionsByUser = new Map<string, PracticeSession[]>();
 
   sessions.forEach((session) => {
@@ -272,6 +289,7 @@ export async function getAdminDashboardData() {
         writingAssessments: writingAssessments.length,
         assets: assets.length,
         internalEvents: internalEvents.length,
+        leadMagnetLeads: leadMagnetLeads.length,
         averageScore: average(sessions.map((session) => session.overall_score)),
       },
       usersOverview,
@@ -280,9 +298,11 @@ export async function getAdminDashboardData() {
       writingAssessments,
       assets,
       internalEvents,
+      leadMagnetLeads,
       analytics: getAnalyticsSummary(analyticsEvents),
       missingTables: {
         internalEvents: Boolean(eventsResult.error || analyticsEventsResult.error),
+        leadMagnetLeads: Boolean(leadMagnetLeadsResult.error),
       },
     },
   };

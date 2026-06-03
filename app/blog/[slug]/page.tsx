@@ -4,9 +4,11 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Search } from "lucide-react";
 
 import { LandingNav } from "@/components/landing/landing-nav";
+import { LeadMagnetForm } from "@/components/lead-magnet/lead-magnet-form";
 import { PublicFooter } from "@/components/shared/public-footer";
 import { Button } from "@/components/ui/button";
 import { blogPosts, getBlogPost, getRelatedPosts } from "@/data/blog-posts";
+import type { LeadMagnetSlug } from "@/data/lead-magnets";
 import { getSiteUrl } from "@/lib/site-url";
 
 type BlogPostPageProps = {
@@ -83,6 +85,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   const relatedPosts = getRelatedPosts(post);
+  const defaultLeadMagnet: LeadMagnetSlug =
+    post.category === "CV and Applications"
+      ? "latam-remote-job-cv-checklist"
+      : "remote-interview-english-cheat-sheet";
   const articleUrl = `${siteUrl}/blog/${post.slug}`;
   const articleImageUrl = `${siteUrl}/blog/${post.slug}/opengraph-image`;
   const articleSchema = {
@@ -259,6 +265,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
           </div>
         </article>
+
+        <section className="mx-auto mt-16 max-w-7xl">
+          <LeadMagnetForm
+            sourcePath={`/blog/${post.slug}`}
+            defaultLeadMagnet={defaultLeadMagnet}
+          />
+        </section>
 
         <section className="mx-auto mt-16 max-w-7xl">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">

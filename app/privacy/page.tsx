@@ -33,6 +33,11 @@ const sections = [
       "Inglevo may send product emails such as welcome messages, onboarding completion, improved answers and readiness summaries. Authentication emails can remain handled by Supabase.",
   },
   {
+    title: "Lead Magnets and Blog Resources",
+    copy:
+      "If you request a free blog resource, Inglevo may store your email, selected resource, target role and source page so we can measure demand and follow up with relevant remote job English resources.",
+  },
+  {
     title: "No Public Profiles by Default",
     copy:
       "Your email, private answers, salary expectations and readiness details are not made public by default. Future shareable reports should require your consent.",
