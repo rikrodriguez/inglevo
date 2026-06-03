@@ -113,6 +113,92 @@ export default async function AdminPage() {
         />
       </section>
 
+      <section className="grid gap-5">
+        <div className="flex flex-col justify-between gap-3 md:flex-row md:items-end">
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">Funnel</p>
+            <h2 className="mt-1 text-xl font-semibold">Marketing analytics</h2>
+            <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
+              First-party events from accepted analytics consent: page views,
+              sessions, CTA clicks, conversion intent and traffic sources.
+            </p>
+          </div>
+          <span className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
+            Latest {data.analytics.eventCount} events
+          </span>
+        </div>
+
+        <div className="mt-5 grid gap-4 md:grid-cols-5">
+          <MetricCard
+            label="Page views"
+            value={data.analytics.pageViews}
+            detail="Accepted-consent visits"
+          />
+          <MetricCard
+            label="Visitors"
+            value={data.analytics.visitors}
+            detail="Anonymous IDs"
+          />
+          <MetricCard
+            label="Sessions"
+            value={data.analytics.sessions}
+            detail="30 min windows"
+          />
+          <MetricCard
+            label="CTA clicks"
+            value={data.analytics.ctaClicks}
+            detail="Links, buttons, checkout"
+          />
+          <MetricCard
+            label="Conversions"
+            value={data.analytics.conversionEvents}
+            detail="Signup, checkout, calls"
+          />
+        </div>
+
+        <div className="mt-6 grid gap-5 xl:grid-cols-3">
+          <AnalyticsList title="Top pages" items={data.analytics.topPages} />
+          <AnalyticsList title="Top CTAs" items={data.analytics.topCtas} />
+          <AnalyticsList title="Sources" items={data.analytics.topSources} />
+        </div>
+
+        <div className="overflow-x-auto rounded-2xl border border-border bg-white p-6 shadow-sm">
+          <table className="w-full min-w-[760px] text-left text-sm">
+            <thead className="text-muted-foreground">
+              <tr className="border-b border-border">
+                <th className="py-3 pr-4 font-medium">Event</th>
+                <th className="py-3 pr-4 font-medium">Path</th>
+                <th className="py-3 pr-4 font-medium">Label</th>
+                <th className="py-3 pr-4 font-medium">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.analytics.recentEvents.length ? (
+                data.analytics.recentEvents.map((event) => (
+                  <tr key={event.id} className="border-b border-border/70">
+                    <td className="py-3 pr-4 font-medium">{event.eventName}</td>
+                    <td className="py-3 pr-4 text-muted-foreground">{event.path}</td>
+                    <td className="py-3 pr-4 text-muted-foreground">
+                      {event.label || "-"}
+                    </td>
+                    <td className="py-3 pr-4 text-muted-foreground">
+                      {formatDate(event.createdAt)}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td className="py-5 pr-4 text-muted-foreground" colSpan={4}>
+                    No analytics events yet. Accept cookies in production and
+                    browse the site to start filling this panel.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <section className="rounded-2xl border border-border bg-white p-6 shadow-sm">
         <h2 className="text-xl font-semibold">Users</h2>
         <div className="mt-4 overflow-x-auto">
@@ -204,6 +290,41 @@ export default async function AdminPage() {
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+function AnalyticsList({
+  title,
+  items,
+}: {
+  title: string;
+  items: Array<{ label: string; value: number; detail?: string }>;
+}) {
+  return (
+    <div className="rounded-2xl border border-border p-4">
+      <h3 className="font-semibold">{title}</h3>
+      <div className="mt-4 grid gap-3">
+        {items.length ? (
+          items.map((item) => (
+            <div key={`${item.label}-${item.detail}`} className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium">{item.label}</p>
+                {item.detail ? (
+                  <p className="mt-1 truncate text-xs text-muted-foreground">
+                    {item.detail}
+                  </p>
+                ) : null}
+              </div>
+              <span className="rounded-full bg-muted px-2.5 py-1 text-xs font-medium">
+                {item.value}
+              </span>
+            </div>
+          ))
+        ) : (
+          <p className="text-sm text-muted-foreground">No data yet.</p>
+        )}
+      </div>
     </div>
   );
 }

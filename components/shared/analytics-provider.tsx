@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Script from "next/script";
 
-export const analyticsConsentKey = "inglevo_analytics_consent";
+import { analyticsConsentKey } from "@/lib/analytics";
 
 export function AnalyticsProvider() {
   const [hasConsent, setHasConsent] = useState(false);

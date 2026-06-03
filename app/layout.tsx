@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AnalyticsCapture } from "@/components/shared/analytics-capture";
 import { AnalyticsProvider } from "@/components/shared/analytics-provider";
 import { CookieConsent } from "@/components/shared/cookie-consent";
 import { RouteAnalytics } from "@/components/shared/route-analytics";
@@ -75,6 +76,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <AnalyticsProvider />
         <RouteAnalytics />
+        <AnalyticsCapture />
         {children}
         <CookieConsent />
       </body>

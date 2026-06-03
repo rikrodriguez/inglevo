@@ -66,6 +66,8 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
 
     if (mode === "signup") {
       trackEvent("signup_started", { source: "auth_form" });
+    } else {
+      trackEvent("login_started", { source: "auth_form" });
     }
 
     const supabase = createSupabaseBrowserClient();

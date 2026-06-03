@@ -2,8 +2,8 @@
 
 import { useSyncExternalStore } from "react";
 
-import { analyticsConsentKey } from "@/components/shared/analytics-provider";
 import { Button } from "@/components/ui/button";
+import { analyticsConsentKey, clearAnalyticsIdentity } from "@/lib/analytics";
 
 function subscribe(onStoreChange: () => void) {
   window.addEventListener("storage", onStoreChange);
@@ -33,6 +33,11 @@ export function CookieConsent() {
 
   function setConsent(value: "accepted" | "declined") {
     window.localStorage.setItem(analyticsConsentKey, value);
+
+    if (value === "declined") {
+      clearAnalyticsIdentity();
+    }
+
     window.dispatchEvent(new Event("inglevo:analytics-consent"));
   }
 
