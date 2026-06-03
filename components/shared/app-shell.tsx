@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   Award,
+  BarChart3,
   BookOpen,
   ClipboardList,
   Compass,
@@ -25,9 +26,10 @@ const navItems = [
   { href: "/app/community", label: "Community", icon: MessagesSquare },
   { href: "/app/library", label: "Library", icon: Library },
   { href: "/for-employers", label: "Employers", icon: Compass },
-  { href: "/app/settings", label: "Settings", icon: Settings },
 ];
 
+const analyticsNavItem = { href: "/app/analytics", label: "Analytics", icon: BarChart3 };
+const settingsNavItem = { href: "/app/settings", label: "Settings", icon: Settings };
 const adminNavItem = { href: "/app/admin", label: "Admin", icon: Shield };
 
 export function AppShell({
@@ -41,7 +43,13 @@ export function AppShell({
   isDemoMode: boolean;
   isAdmin?: boolean;
 }) {
-  const visibleNavItems = isAdmin ? [...navItems, adminNavItem] : navItems;
+  const shouldShowAnalytics = isAdmin || isDemoMode;
+  const visibleNavItems = [
+    ...navItems,
+    ...(shouldShowAnalytics ? [analyticsNavItem] : []),
+    settingsNavItem,
+    ...(isAdmin ? [adminNavItem] : []),
+  ];
 
   return (
     <div className="app-bg min-h-screen">
