@@ -1,3 +1,5 @@
+import { roleBlogPosts } from "@/data/role-blog-posts";
+
 export type BlogPostSection = {
   heading: string;
   body: string[];
@@ -1041,6 +1043,7 @@ export const blogPosts: BlogPost[] = [
       "slack-update-examples-english",
     ],
   },
+  ...roleBlogPosts,
 ];
 
 export const featuredBlogPosts = blogPosts.slice(0, 3);
