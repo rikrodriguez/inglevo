@@ -15,9 +15,9 @@ const stories = [
 ] as const;
 
 const scenarioStories = [
-  ["Camila R.", "How her profile became easier to trust", "Talent example"],
-  ["Andres P.", "Practicing sales English for remote roles", "Talent example"],
-  ["David M.", "Why verified profiles reduce screening noise", "Employer example"],
+  ["Camila R.", "How her profile became easier to trust", "Talent story"],
+  ["Andres P.", "Practicing sales English for remote roles", "Talent story"],
+  ["David M.", "Why verified profiles reduce screening noise", "Employer story"],
 ] as const;
 
 export default function SuccessStoriesPage() {
@@ -30,7 +30,7 @@ export default function SuccessStoriesPage() {
             <div>
               <div className="brand-chip mb-6">Success Stories</div>
               <h1 className="text-6xl font-extrabold leading-[0.95] tracking-[-0.045em] sm:text-7xl lg:text-[5.4rem]">
-                Beta proof scenarios for stronger remote candidates.
+                Success stories for stronger remote candidates.
               </h1>
             </div>
             <p className="max-w-2xl text-xl leading-8 text-neutral-600">
@@ -48,7 +48,7 @@ export default function SuccessStoriesPage() {
                 <div className={`min-h-[260px] p-6 text-white ${index === 1 ? "bg-[linear-gradient(135deg,#111,#2b1b62,#5fb7f7)]" : "bg-[linear-gradient(135deg,#7459f6,#5fb7f7_52%,#de61bf)]"}`}>
                   <div className="flex items-center justify-between">
                     <span className="rounded-full bg-white/15 px-3 py-1.5 text-xs font-black uppercase tracking-[0.12em]">
-                      Beta scenario
+                      Candidate story
                     </span>
                     <span className="rounded-full bg-black/20 px-3 py-1.5 text-xs font-bold">{status}</span>
                   </div>
@@ -74,7 +74,7 @@ export default function SuccessStoriesPage() {
                 <div className="flex items-center gap-1 text-[#6f45dd]">
                   <Star className="size-4 fill-current" />
                   <span className="text-xs font-black uppercase tracking-[0.1em]">
-                    Example
+                    Story
                   </span>
                 </div>
                 <p className="mt-7 text-lg leading-8 text-neutral-800">“{quote}”</p>
@@ -86,9 +86,8 @@ export default function SuccessStoriesPage() {
             ))}
           </div>
           <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-5 text-neutral-500">
-            These examples are illustrative until public beta outcomes are
-            published. Inglevo does not guarantee employment, interviews, income,
-            visas, sponsorship or job placement.
+            These stories are illustrative. Inglevo does not guarantee
+            employment, interviews, income, visas, sponsorship or job placement.
           </p>
         </section>
 
