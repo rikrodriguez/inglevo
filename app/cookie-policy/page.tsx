@@ -42,7 +42,7 @@ export default function CookiePolicyPage() {
           <div className="mt-12 rounded-[2rem] border border-black/5 bg-[#f8f8f7] p-8">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-neutral-500">Note</p>
             <p className="mt-4 max-w-3xl text-lg leading-8 text-neutral-700">
-              This is a practical beta policy page and should be reviewed by a
+              This is a practical policy page and should be reviewed by a
               legal professional before production launch.
             </p>
             <Button asChild className="mt-6 rounded-full bg-black px-7 text-white">

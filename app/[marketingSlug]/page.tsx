@@ -305,7 +305,7 @@ const marketingPages = {
     eyebrow: "Talent",
     title: "Candidate momentum and hiring signal stories.",
     description:
-      "Examples of how LATAM talent can improve profile quality, communication confidence and application structure with Inglevo.",
+      "Stories of how LATAM talent can improve profile quality, communication confidence and application structure with Inglevo.",
     primaryCta: "Start my path",
     secondaryCta: "See pricing",
     bullets: [
@@ -316,8 +316,8 @@ const marketingPages = {
     ],
     sections: [
       {
-        title: "Beta proof scenarios",
-        copy: "Use these examples to explain what Inglevo is designed to improve while public outcomes are still being collected.",
+        title: "Candidate proof stories",
+        copy: "Use these stories to explain what Inglevo is designed to improve while public outcomes are still being collected.",
       },
       {
         title: "Show progress, not fake guarantees",

@@ -227,7 +227,7 @@ const roleGuides: RoleGuide[] = [
     ],
     sampleQuestion: "Question: How do you respond when a prospect says they are not interested?",
     sampleAnswer:
-      "I acknowledge it and avoid pushing too hard. Then I try to understand if it is a timing issue, a relevance issue or the wrong contact. For example, I might say: 'Totally fair. Is this not a priority right now, or is there someone else who owns this area?' That keeps the conversation respectful and gives me useful information for the CRM.",
+      "I acknowledge it and avoid pushing too hard. Then I try to understand if it is a timing issue, a relevance issue or the wrong contact. For instance, I might say: 'Totally fair. Is this not a priority right now, or is there someone else who owns this area?' That keeps the conversation respectful and gives me useful information for the CRM.",
     responsibilities: [
       "prospecting",
       "cold email",
@@ -602,7 +602,7 @@ const roleGuides: RoleGuide[] = [
     ],
     sampleQuestion: "Question: How do you report campaign results?",
     sampleAnswer:
-      "I start with the goal, then report the most relevant metrics instead of listing everything. For example, if the goal was lead generation, I would share traffic, conversion rate, leads, cost per lead if available and what we should improve next. I also separate facts from recommendations so the team can decide quickly.",
+      "I start with the goal, then report the most relevant metrics instead of listing everything. For instance, if the goal was lead generation, I would share traffic, conversion rate, leads, cost per lead if available and what we should improve next. I also separate facts from recommendations so the team can decide quickly.",
     responsibilities: [
       "campaign coordination",
       "content calendar",
@@ -693,12 +693,12 @@ function makeInterviewPost(role: RoleGuide): BlogPost {
         bullets: role.interviewQuestions,
       },
       {
-        heading: "Answer example that sounds specific",
+        heading: "Sample answer that sounds specific",
         body: [
           "A good answer should make your work visible. Avoid saying only that you are responsible or organized. Show the process you follow when the situation is difficult.",
         ],
-        example: {
-          label: "Example answer",
+        sample: {
+          label: "Sample answer",
           items: [role.sampleQuestion, role.sampleAnswer],
         },
       },
@@ -708,7 +708,7 @@ function makeInterviewPost(role: RoleGuide): BlogPost {
           `Many ${role.role} candidates lose strength because they answer in generic English. The interviewer should hear how you work in a remote team.`,
         ],
         bullets: [
-          "Do not say you are good at communication without giving an example.",
+          "Do not say you are good at communication without giving a specific situation.",
           `Do not list tools only. Explain how you used ${role.tools.slice(0, 3).join(", ")} in real work.`,
           "Do not hide blockers. Remote teams value early, clear updates.",
           "Do not translate a long Spanish answer word by word.",
@@ -783,8 +783,8 @@ function makeResumePost(role: RoleGuide): BlogPost {
         body: [
           "A strong bullet uses action, scope, tool or responsibility and result. It should sound like real work, not a copied job description.",
         ],
-        example: {
-          label: "Resume bullet example",
+        sample: {
+          label: "Resume bullet sample",
           items: [
             `Weak: Responsible for ${role.role.toLowerCase()} tasks.`,
             `Strong: ${role.resumeBullet}`,
@@ -862,7 +862,7 @@ function makeCommunicationPost(role: RoleGuide): BlogPost {
         body: [
           "Use these as starting points. Replace the placeholders with real details from your work or the interview assignment.",
         ],
-        example: {
+        sample: {
           label: "Copy-ready templates",
           items: role.communicationTemplates,
         },

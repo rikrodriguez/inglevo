@@ -85,7 +85,7 @@ export const leadMagnets: LeadMagnet[] = [
         title: "Experience bullet formula",
         items: [
           "Action + scope + tool/process + measurable outcome.",
-          "Example: Resolved 60+ weekly tickets in Zendesk and documented recurring issues for product teams.",
+          "Sample: Resolved 60+ weekly tickets in Zendesk and documented recurring issues for product teams.",
           "Avoid: Responsible for customer support tasks.",
         ],
       },

@@ -381,7 +381,7 @@ function ProfilePhoto({ name, size = "md" }: { name: string; size?: "sm" | "md" 
 
   return (
     <span
-      aria-label={`${name} example avatar`}
+      aria-label={`${name} candidate avatar`}
       className={`relative grid shrink-0 place-items-center overflow-hidden rounded-full bg-[linear-gradient(135deg,#7459f6,#5fb7f7_52%,#de61bf)] font-black text-white shadow-sm ring-2 ring-white ${dimensions} ${textSize}`}
       role="img"
     >
@@ -1845,7 +1845,7 @@ function TestimonialsSection() {
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-500">
-              Beta proof scenarios
+              Candidate proof stories
             </p>
             <h2 className="mt-4 max-w-xl text-4xl font-semibold leading-[0.98] tracking-[-0.065em] sm:text-6xl">
               The proof we are building with early candidates.
@@ -1853,7 +1853,7 @@ function TestimonialsSection() {
           </div>
           <div className="lg:justify-self-end">
             <p className="max-w-xl text-lg leading-8 text-neutral-600">
-              These are illustrative beta scenarios that show the outcomes
+              These are illustrative scenarios that show the outcomes
               Inglevo is designed to support: clearer communication, stronger
               profiles and better hiring context.
             </p>
@@ -1874,7 +1874,7 @@ function TestimonialsSection() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_24%_18%,rgba(255,255,255,0.28),transparent_28%),radial-gradient(circle_at_82%_72%,rgba(255,255,255,0.18),transparent_32%)]" />
                 <div className="relative flex items-center justify-between">
                   <span className="rounded-full bg-white/16 px-3 py-1.5 text-xs font-black uppercase tracking-[0.12em] backdrop-blur">
-                    Beta scenario
+                    Candidate story
                   </span>
                   <span className="rounded-full bg-black/18 px-3 py-1.5 text-xs font-bold backdrop-blur">
                     {story.role}
@@ -1927,7 +1927,7 @@ function TestimonialsSection() {
                 <div className="flex items-center gap-1 text-[#6f45dd]">
                   <Star className="size-3 fill-current" />
                   <span className="text-xs font-black uppercase tracking-[0.1em]">
-                    Example
+                    Story
                   </span>
                 </div>
               </div>
@@ -1966,7 +1966,7 @@ function TestimonialsSection() {
           </div>
         </div>
         <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-5 text-neutral-500">
-          Examples are illustrative until public beta outcomes are published.
+          Stories are illustrative while public outcomes are being collected.
           Inglevo does not guarantee jobs, interviews, visas, sponsorship or income.
         </p>
       </div>

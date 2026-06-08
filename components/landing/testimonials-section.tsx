@@ -50,12 +50,12 @@ export function TestimonialsSection() {
     <section className="px-4 py-28 sm:px-6">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="section-kicker">Candidate examples</p>
+          <p className="section-kicker">Candidate stories</p>
           <h2 className="brand-section-title mt-4 text-6xl sm:text-7xl">
             Built for LATAM professionals preparing for the next role.
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-xl leading-8 text-neutral-600">
-            Example stories of how Inglevo supports stronger communication,
+            Stories of how Inglevo supports stronger communication,
             clearer profiles and better preparation for US remote opportunities.
           </p>
         </div>

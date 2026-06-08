@@ -13,11 +13,11 @@ export function PricingPreview() {
           <p className="mt-2 text-muted-foreground">
             Free lets you test Interview English, templates and your first
             score. Pro will be for continuous practice, unlimited assets and
-            deeper reports. Career Sprint stays as a manual beta.
+            deeper reports. Career Sprint stays as a manual review path.
           </p>
         </div>
         <Button asChild variant="outline">
-          <Link href="/pricing">View beta and plans</Link>
+          <Link href="/pricing">View plans</Link>
         </Button>
       </div>
     </section>

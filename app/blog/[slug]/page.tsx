@@ -229,13 +229,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     </ul>
                   ) : null}
 
-                  {section.example ? (
+                  {section.sample ? (
                     <div className="mt-7 rounded-[1.5rem] border border-[#6f45dd]/15 bg-[#f7f3ff] p-5">
                       <p className="text-sm font-semibold text-[#6f45dd]">
-                        {section.example.label}
+                        {section.sample.label}
                       </p>
                       <div className="mt-4 grid gap-3 text-sm leading-7 text-neutral-700">
-                        {section.example.items.map((item) => (
+                        {section.sample.items.map((item) => (
                           <p key={item}>{item}</p>
                         ))}
                       </div>

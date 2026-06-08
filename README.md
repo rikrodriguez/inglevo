@@ -120,7 +120,7 @@ The schema includes RLS for profiles, practice sessions, templates, and subscrip
 ## Placeholders
 
 - Stripe checkout until keys and price IDs are configured.
-- Career Sprint beta plan.
+- Career Sprint manual plan.
 - CV/LinkedIn review inside Career Sprint.
 - Demo mode when Supabase is not configured.
 

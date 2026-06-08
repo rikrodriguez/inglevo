@@ -239,7 +239,7 @@ function HeroMockup() {
             </div>
           </div>
           <div className="rounded-[1.5rem] border border-black/5 bg-[#d0f5e3] p-5">
-            <p className="text-sm font-bold">Beta access</p>
+            <p className="text-sm font-bold">Early access</p>
             <p className="mt-4 text-5xl font-black tracking-[-0.07em]">$245</p>
             <p className="mt-2 text-xs font-semibold text-black/55">One-time lifetime path</p>
             <div className="mt-5 rounded-2xl bg-white/75 p-3 text-xs font-semibold">
@@ -321,7 +321,7 @@ function OfferCard() {
                 <p className="text-sm font-bold text-white/55">Remote Ready Verification Path</p>
                 <p className="mt-4 text-7xl font-black tracking-[-0.08em]">$245</p>
                 <p className="mt-2 text-sm font-semibold text-white/58">
-                  One-time beta lifetime access
+                  One-time lifetime access
                 </p>
               </div>
               <div className="rounded-2xl bg-white/10 p-4 text-sm text-white/70">

@@ -353,7 +353,7 @@ function createMockConversationTurn(
   const followUpQuestion =
     input.turnCount && input.turnCount > 1
       ? "Can you describe one concrete result you achieved in that situation?"
-      : "Can you give me one specific example that shows your impact?";
+      : "Can you give me one specific situation that shows your impact?";
 
   return {
     interviewerReply:

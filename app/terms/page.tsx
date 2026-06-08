@@ -3,9 +3,9 @@ import { SiteHeader } from "@/components/shared/site-header";
 
 const sections = [
   {
-    title: "Beta Product",
+    title: "Product Access",
     copy:
-      "Inglevo is currently a beta product for practicing professional English, remote work communication and job application readiness.",
+      "Inglevo provides product access for practicing professional English, remote work communication and job application readiness.",
   },
   {
     title: "No Employment Guarantee",
@@ -30,7 +30,7 @@ const sections = [
   {
     title: "Future Paid Plans",
     copy:
-      "Pricing and checkout may change before production. Stripe checkout can remain disabled until payment keys and policies are configured.",
+      "Pricing and checkout may change as plans evolve. Paid access is governed by the payment terms shown at checkout.",
   },
 ];
 
@@ -45,7 +45,7 @@ export default function TermsPage() {
             Terms of Service
           </h1>
           <p className="mt-6 text-xl leading-8 text-neutral-600">
-            Basic terms for the Inglevo beta. Review with counsel before a public
+            Basic terms for Inglevo. Review with counsel before a public
             production launch.
           </p>
           <div className="mt-10 grid gap-4">

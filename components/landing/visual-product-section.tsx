@@ -12,7 +12,7 @@ const stats = [
   ["8", "Role paths"],
   ["4", "Verified layers"],
   ["12", "CRM stages"],
-  ["82", "Example score"],
+  ["82", "Readiness score"],
 ] as const;
 
 export function VisualProductSection() {

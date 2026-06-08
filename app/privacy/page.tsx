@@ -60,7 +60,7 @@ export default function PrivacyPage() {
             Privacy Policy
           </h1>
           <p className="mt-6 text-xl leading-8 text-neutral-600">
-            This page explains the basic privacy principles for the Inglevo beta.
+            This page explains the basic privacy principles for the Inglevo product.
             It is not legal advice and should be reviewed before production.
           </p>
           <div className="mt-10 grid gap-4">

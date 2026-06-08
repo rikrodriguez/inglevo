@@ -40,7 +40,7 @@ function getVoiceFeedback(
     "first",
     "second",
     "because",
-    "for example",
+    "for instance",
     "result",
     "impact",
     "currently",

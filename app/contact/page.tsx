@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button";
 
 const contactPaths = [
   {
-    title: "Talent beta access",
+    title: "Talent access",
     copy: "For LATAM professionals who want to practice role English and build an Inglevo profile.",
-    href: "mailto:hello@inglevo.com?subject=Inglevo%20talent%20beta%20access",
+    href: "mailto:hello@inglevo.com?subject=Inglevo%20talent%20access",
     icon: UserPlus,
-    cta: "Request beta access",
+    cta: "Request talent access",
   },
   {
     title: "Employer pilots",

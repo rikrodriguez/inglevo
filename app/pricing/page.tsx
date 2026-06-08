@@ -61,7 +61,7 @@ const employerModels = [
 const valueAnchors = [
   ["$245", "Full verification path"],
   ["$89", "Lowest payment to start"],
-  ["$50K+", "Example annual USD opportunity ceiling"],
+  ["$50K+", "Potential annual USD opportunity ceiling"],
 ] as const;
 
 function PricingValueMockup() {
@@ -92,7 +92,7 @@ function PricingValueMockup() {
           $245 to compete for roles that can reach $50,000+ per year.
         </p>
         <p className="mt-3 text-xs leading-5 text-white/70">
-          Example only. Inglevo does not guarantee employment, income, interviews or salary.
+          Reference only. Inglevo does not guarantee employment, income, interviews or salary.
         </p>
       </div>
     </div>

@@ -4,7 +4,7 @@ export type BlogPostSection = {
   heading: string;
   body: string[];
   bullets?: string[];
-  example?: {
+  sample?: {
     label: string;
     items: string[];
   };
@@ -110,14 +110,14 @@ export const blogPosts: BlogPost[] = [
       {
         heading: "Answer framework: context, signal, proof",
         body: [
-          "Strong answers usually follow a simple structure. First, give context. Then show the signal the employer wants. Finally, give proof with a real example.",
+          "Strong answers usually follow a simple structure. First, give context. Then show the signal the employer wants. Finally, give proof with a real situation.",
           "This structure keeps your answer short and helps you avoid translating a long Spanish answer word by word.",
         ],
-        example: {
-          label: "Example answer",
+        sample: {
+          label: "Sample answer",
           items: [
             "Question: How do you communicate when you are blocked?",
-            "Answer: If I am blocked, I first check the documentation or previous tickets. If I cannot solve it quickly, I send a clear message with what I tried, what I need and the impact on the timeline. For example, in my last role I was blocked by missing access to a reporting tool, so I documented the issue, tagged the owner and proposed a temporary manual report so the team could keep moving.",
+            "Answer: If I am blocked, I first check the documentation or previous tickets. If I cannot solve it quickly, I send a clear message with what I tried, what I need and the impact on the timeline. For instance, in my last role I was blocked by missing access to a reporting tool, so I documented the issue, tagged the owner and proposed a temporary manual report so the team could keep moving.",
           ],
         },
       },
@@ -206,7 +206,7 @@ export const blogPosts: BlogPost[] = [
         body: [
           "Use this as a base, then make it specific to the job description.",
         ],
-        example: {
+        sample: {
           label: "Template",
           items: [
             "I am a [role] with [X years] of experience in [area]. Most of my work has focused on [specific responsibility or result]. I have used tools like [tools] and I am comfortable communicating with teams through [Slack, email, tickets, CRM, docs]. I am now looking for a remote role where I can use my experience in [role area] and keep improving my professional English while contributing to a team with clear goals.",
@@ -214,11 +214,11 @@ export const blogPosts: BlogPost[] = [
         },
       },
       {
-        heading: "Role-specific examples",
+        heading: "Role-specific situations",
         body: [
           "The best answer changes by role. A customer support candidate should sound service-oriented. A developer should show problem solving. A sales candidate should show pipeline discipline and communication.",
         ],
-        example: {
+        sample: {
           label: "Examples",
           items: [
             "Customer Support: I am a customer support specialist with experience helping users through chat and email. I am comfortable explaining steps clearly, documenting issues and escalating when needed. In my last role, I worked with tickets, macros and internal notes, so I understand how important clear written English is for remote teams.",
@@ -311,7 +311,7 @@ export const blogPosts: BlogPost[] = [
         body: [
           "A strong bullet connects action, tool and result. If you only write what you were responsible for, the recruiter has to guess your impact.",
         ],
-        example: {
+        sample: {
           label: "Before and after",
           items: [
             "Weak: Responsible for answering customer emails.",
@@ -393,11 +393,11 @@ export const blogPosts: BlogPost[] = [
         body: [
           "Use this when you want to show what is moving, what changed and what happens next.",
         ],
-        example: {
-          label: "Template and example",
+        sample: {
+          label: "Template and sample",
           items: [
             "Template: Quick update: [what is done]. I am now working on [next step]. Expected by [time/date].",
-            "Example: Quick update: the customer import file is cleaned and uploaded. I am now checking the duplicate records before sending the final report. Expected by 3 PM Lima time.",
+            "Sample: Quick update: the customer import file is cleaned and uploaded. I am now checking the duplicate records before sending the final report. Expected by 3 PM Lima time.",
           ],
         },
       },
@@ -406,8 +406,8 @@ export const blogPosts: BlogPost[] = [
         body: [
           "A good blocker message includes what you tried, what is blocking you and what you need. Do not simply write I have a problem.",
         ],
-        example: {
-          label: "Blocker example",
+        sample: {
+          label: "Blocker sample",
           items: [
             "I am blocked on the billing report because I do not have access to the Stripe export. I already checked the shared drive and last week's report. Could someone with admin access export transactions from May 1 to May 31? I can continue with reconciliation once I have that file.",
           ],
@@ -591,7 +591,7 @@ export const blogPosts: BlogPost[] = [
           "Start with productivity or focus.",
           "Mention communication discipline.",
           "Show respect for goals and deadlines.",
-          "Add one real example from your experience.",
+          "Add one real situation from your experience.",
         ],
       },
       {
@@ -599,8 +599,8 @@ export const blogPosts: BlogPost[] = [
         body: [
           "This answer is clear without sounding over-rehearsed.",
         ],
-        example: {
-          label: "Example answer",
+        sample: {
+          label: "Sample answer",
           items: [
             "I want to work remotely because I do some of my best work when I can focus deeply and communicate intentionally. I understand that remote work requires trust, clear updates and strong ownership. In my last role, I managed tasks through Slack and shared docs, and I learned to send proactive updates when priorities changed. For me, remote work is not about working less. It is about working with more clarity and accountability.",
           ],
@@ -611,7 +611,7 @@ export const blogPosts: BlogPost[] = [
         body: [
           "Customize the answer so it sounds connected to the job.",
         ],
-        example: {
+        sample: {
           label: "Variations",
           items: [
             "Customer support: Remote work lets me focus on written communication, ticket quality and fast follow-up without losing empathy.",
@@ -710,7 +710,7 @@ export const blogPosts: BlogPost[] = [
         body: [
           "You can ask directly without sounding rude.",
         ],
-        example: {
+        sample: {
           label: "Message",
           items: [
             "Thank you for reaching out. Before I continue, could you please share the official job posting, your company email and the next steps in the interview process? I like to verify remote opportunities carefully before sharing personal information.",
@@ -806,7 +806,7 @@ export const blogPosts: BlogPost[] = [
         body: [
           "Each path needs a different proof package. Do not use the same application assets for every role.",
         ],
-        example: {
+        sample: {
           label: "Proof packages",
           items: [
             "Customer support: support reply samples, ticket examples, empathy scripts and tool familiarity.",
@@ -874,7 +874,7 @@ export const blogPosts: BlogPost[] = [
       {
         heading: "Common interview questions",
         body: [
-          "Practice these questions with real examples from your past work, even if your title was not customer success.",
+          "Practice these questions with real situations from your past work, even if your title was not customer success.",
         ],
         bullets: [
           "How do you build trust with a new customer?",
@@ -894,8 +894,8 @@ export const blogPosts: BlogPost[] = [
         body: [
           "This question tests empathy and control. Do not blame the customer or promise things you cannot deliver.",
         ],
-        example: {
-          label: "Example answer",
+        sample: {
+          label: "Sample answer",
           items: [
             "First, I would acknowledge the customer's frustration and make sure I understand the real impact. Then I would summarize the issue in simple language, explain what I can do now and set a clear next step. If another team is needed, I would document the case and follow up with a realistic timeline. My goal is to make the customer feel heard while keeping the solution honest.",
           ],
@@ -999,8 +999,8 @@ export const blogPosts: BlogPost[] = [
         body: [
           "This answer should show resilience and learning, not emotional toughness only.",
         ],
-        example: {
-          label: "Example answer",
+        sample: {
+          label: "Sample answer",
           items: [
             "I see rejection as part of the process, but I still try to learn from it. If a prospect says no, I check whether the message was relevant, whether the timing was wrong or whether I targeted the wrong persona. I document the outcome in the CRM and move to the next account. Consistency matters, but so does improving the quality of each touchpoint.",
           ],
@@ -1011,7 +1011,7 @@ export const blogPosts: BlogPost[] = [
         body: [
           "A remote SDR should be able to write concise outreach in English.",
         ],
-        example: {
+        sample: {
           label: "Cold email template",
           items: [
             "Subject: Quick idea for [company]",
