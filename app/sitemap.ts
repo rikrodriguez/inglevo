@@ -11,6 +11,7 @@ const publicRoutes = [
   "/employers",
   "/features",
   "/pricing",
+  "/remote-ready",
   "/ai-english-trainer",
   "/verification-profile",
   "/cv-builder",
@@ -44,7 +45,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority:
       route === ""
         ? 1
-        : route === "/blog"
+        : route === "/remote-ready"
+          ? 0.95
+          : route === "/blog"
           ? 0.9
           : route === "/pricing"
             ? 0.9

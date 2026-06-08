@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useSyncExternalStore } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -24,12 +25,14 @@ function getServerSnapshot() {
 }
 
 export function CookieConsent() {
+  const pathname = usePathname();
   const consent = useSyncExternalStore(
     subscribe,
     getConsentSnapshot,
     getServerSnapshot
   );
   const visible = consent === "pending";
+  const conversionLanding = pathname === "/remote-ready";
 
   function setConsent(value: "accepted" | "declined") {
     window.localStorage.setItem(analyticsConsentKey, value);
@@ -46,7 +49,11 @@ export function CookieConsent() {
   }
 
   return (
-    <div className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-3xl rounded-2xl border border-border bg-white p-4 shadow-2xl">
+    <div
+      className={`fixed inset-x-4 z-50 mx-auto max-w-3xl rounded-2xl border border-border bg-white p-4 shadow-2xl ${
+        conversionLanding ? "bottom-20 sm:bottom-4" : "bottom-4"
+      }`}
+    >
       <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
         <div>
           <p className="font-semibold">Help us improve Inglevo</p>
