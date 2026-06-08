@@ -367,8 +367,8 @@ export default function RemoteReadyPage() {
       <main className="bg-white text-black">
         <section className="relative overflow-hidden px-4 pb-14 pt-14 sm:px-6 lg:pb-20 lg:pt-18">
           <div className="absolute inset-x-0 top-0 -z-10 h-[620px] bg-[radial-gradient(circle_at_12%_8%,rgba(123,63,242,0.12),transparent_28%),radial-gradient(circle_at_88%_5%,rgba(56,189,248,0.15),transparent_30%),linear-gradient(180deg,#ffffff,#fbfbfa)]" />
-          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <div>
+          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div className="lg:pt-10">
               <h1 className="max-w-3xl text-6xl font-black leading-[0.9] tracking-[-0.065em] text-black sm:text-7xl lg:text-[6rem]">
                 Get remote-job ready in 21 days.
               </h1>
