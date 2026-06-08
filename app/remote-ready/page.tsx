@@ -22,16 +22,16 @@ import { BrandLogo } from "@/components/shared/brand-logo";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Remote Ready Verification Path",
+  title: "Remote Work Signal Verification Path",
   description:
-    "A high-intent conversion path for LATAM professionals who want role English practice, CV signals, remote-readiness checks and a verified Inglevo profile for US remote jobs.",
+    "A high-intent conversion path for LATAM professionals who want role English practice, CV signals, readiness checks and a verified Inglevo profile for remote-work applications.",
   alternates: {
     canonical: "/remote-ready",
   },
   openGraph: {
-    title: "Remote Ready Verification Path | Inglevo",
+    title: "Remote Work Signal Verification Path | Inglevo",
     description:
-      "Become a stronger remote-job candidate with role English, interview practice, CV assets and verified readiness signals.",
+      "Build stronger remote-work signals with role English, interview practice, CV assets and verified readiness checks.",
     url: "/remote-ready",
     type: "website",
   },
@@ -90,7 +90,7 @@ const offerStack = [
   {
     icon: Mic,
     title: "Interview English practice",
-    copy: "Remote-job answers for customer support, SDR, VA, operations, product, QA and software roles.",
+    copy: "Interview answers for customer support, SDR, VA, operations, product, QA and software roles.",
   },
   {
     icon: FileText,
@@ -123,7 +123,7 @@ const objections = [
   {
     question: "Is this an English course?",
     answer:
-      "No. It is a remote-job readiness path. English practice is included, but the output is stronger hiring signals, not generic lessons.",
+      "No. It is a remote-work signal path. English practice is included, but the output is stronger application proof, not generic lessons.",
   },
   {
     question: "Does it guarantee a job?",
@@ -262,7 +262,7 @@ function SignalComparison() {
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-8 text-white/68">
             They judge whether you look easy to trust, easy to interview and easy
-            to place into a remote team. This page sells that signal system.
+            to evaluate for a remote team. This page sells that signal system.
           </p>
         </div>
 
@@ -370,11 +370,11 @@ export default function RemoteReadyPage() {
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div className="lg:pt-10">
               <h1 className="max-w-3xl text-6xl font-black leading-[0.9] tracking-[-0.065em] text-black sm:text-7xl lg:text-[6rem]">
-                Get remote-job ready in 21 days.
+                Build stronger remote-work signals in 21 days.
               </h1>
               <p className="mt-7 max-w-2xl text-xl leading-8 text-neutral-700 sm:text-2xl sm:leading-9">
                 Role English, CV signals, interview practice and a verified
-                profile built for LATAM talent applying to US remote jobs.
+                profile built for LATAM talent applying to remote roles.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button asChild className="h-12 rounded-full bg-black px-7 text-white shadow-[0_18px_44px_rgba(7,9,12,0.22)] hover:bg-black/90">
