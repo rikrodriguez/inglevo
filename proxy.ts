@@ -1,12 +1,23 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+import { canBypassAuthForAIEnglishDemo } from "@/lib/ai-english/demo-access";
+
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl.clone();
   const isAppRoute = url.pathname === "/app" || url.pathname.startsWith("/app/");
   const hasSupabase =
     process.env.NEXT_PUBLIC_SUPABASE_URL &&
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (
+    canBypassAuthForAIEnglishDemo({
+      pathname: url.pathname,
+      hostname: url.hostname,
+    })
+  ) {
+    return NextResponse.next();
+  }
 
   if (!isAppRoute || !hasSupabase) {
     return NextResponse.next();
@@ -61,5 +72,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
