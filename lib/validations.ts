@@ -139,6 +139,10 @@ export const remoteJobAssetSchema = z.object({
   ]),
   inputContext: z.string().min(10).max(4000),
   sourceSessionId: z.uuid().nullable().optional(),
+  directTitle: z.string().min(1).max(160).optional(),
+  directContent: z.string().min(1).max(6000).optional(),
+  directRationale: z.string().min(1).max(1200).optional(),
+  directTips: z.array(z.string().min(1).max(240)).max(5).optional(),
   userRole: z.string().max(100).optional(),
   userGoal: z.string().max(160).optional(),
 });

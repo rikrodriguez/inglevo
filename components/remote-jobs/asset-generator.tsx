@@ -9,7 +9,7 @@ import { trackEvent } from "@/lib/analytics";
 import type { Profile, RemoteJobAsset, RemoteJobAssetOutput, RemoteJobAssetType } from "@/types";
 
 type ApiResponse = {
-  source: "mock" | "openai";
+  source: "mock" | "openai" | "direct";
   saved: boolean;
   saveError?: string | null;
   message: string;
@@ -169,7 +169,11 @@ export function AssetGenerator({
                 <h2 className="mt-1 text-2xl font-semibold">{result.title}</h2>
               </div>
               <span className="rounded-full bg-[#d0f5e3] px-3 py-1 text-sm text-black">
-                {result.source === "openai" ? "AI generated" : "Mock generated"}
+                {result.source === "openai"
+                  ? "AI generated"
+                  : result.source === "direct"
+                    ? "Saved exact version"
+                    : "Practice generated"}
               </span>
             </div>
             <div className="mt-5 whitespace-pre-wrap rounded-2xl border border-border bg-muted/40 p-5 leading-7">

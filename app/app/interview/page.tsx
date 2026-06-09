@@ -1,8 +1,23 @@
 import { InterviewTrainer } from "@/components/interview/interview-trainer";
-import { getViewer } from "@/lib/data";
+import { getPracticeSessions, getViewer } from "@/lib/data";
+import { getFreePracticeLimit } from "@/lib/usage-limits";
 
-export default async function InterviewPage() {
-  const { profile } = await getViewer();
+type InterviewPageProps = {
+  searchParams?: Promise<{
+    mode?: string;
+    simulation?: string;
+  }>;
+};
+
+export default async function InterviewPage({ searchParams }: InterviewPageProps) {
+  const [{ profile }, sessions] = await Promise.all([
+    getViewer(),
+    getPracticeSessions(),
+  ]);
+  const params = await searchParams;
+  const initialInputMode = params?.mode === "speak" ? "speak" : "write";
+  const initialVoicePracticeType =
+    params?.simulation === "meeting" ? "meeting" : "speaking";
 
   return (
     <div className="mx-auto max-w-7xl">
@@ -22,7 +37,13 @@ export default async function InterviewPage() {
           reliable communication.
         </p>
       </div>
-      <InterviewTrainer profile={profile} />
+      <InterviewTrainer
+        profile={profile}
+        initialInputMode={initialInputMode}
+        initialVoicePracticeType={initialVoicePracticeType}
+        previousSessions={sessions}
+        freePracticeLimit={getFreePracticeLimit()}
+      />
     </div>
   );
 }

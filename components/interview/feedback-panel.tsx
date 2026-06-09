@@ -31,8 +31,19 @@ export function FeedbackPanel({
             <h2 className="text-2xl font-semibold">Improved answer</h2>
           </div>
           <span className="rounded-full bg-[#d0f5e3] px-3 py-1 text-sm text-black">
-            {source === "openai" ? "AI feedback" : "Mock feedback"}
+            {source === "openai" ? "AI feedback" : "Practice feedback"}
           </span>
+        </div>
+        <div className="mt-5 rounded-2xl border border-[#d0f5e3] bg-[#d0f5e3]/60 p-4">
+          <p className="text-sm font-semibold text-black">Next action</p>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            Repeat once using this focus:{" "}
+            <span className="font-medium text-foreground">
+              {result.whatToImprove[0] ?? result.nextPractice}
+            </span>
+            . Then save the stronger version as a job asset when it feels
+            accurate to your real experience.
+          </p>
         </div>
         <div className="mt-4 grid gap-4">
           <ImprovedAnswerCard

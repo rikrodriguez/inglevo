@@ -6,6 +6,7 @@ import { generateRemoteJobAsset } from "@/lib/openai";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { remoteJobAssetSchema } from "@/lib/validations";
+import type { RemoteJobAssetOutput } from "@/types";
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,7 +39,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { asset, source } = await generateRemoteJobAsset(parsed.data);
+    const isDirectSave = Boolean(parsed.data.directContent);
+    const generated = isDirectSave
+      ? null
+      : await generateRemoteJobAsset(parsed.data);
+    const asset: RemoteJobAssetOutput = isDirectSave
+      ? {
+          title: parsed.data.directTitle ?? "Saved Inglevo asset",
+          content: parsed.data.directContent!,
+          rationale:
+            parsed.data.directRationale ??
+            "Saved exactly from the user's strongest improved version so it can be reused without losing context.",
+          tips:
+            parsed.data.directTips?.length
+              ? parsed.data.directTips
+              : [
+                  "Practice this out loud before using it.",
+                  "Keep the facts accurate to your real experience.",
+                  "Adapt the wording to each role before sending it.",
+                ],
+        }
+      : generated!.asset;
+    const source = isDirectSave ? "direct" : generated!.source;
     const supabase = await createSupabaseServerClient().catch(() => null);
     let saved = false;
     let saveError: string | null = null;
@@ -63,7 +85,9 @@ export async function POST(request: NextRequest) {
       saveError,
       message: saved
         ? "Job asset saved."
-        : "Asset generated. Apply migration 005_job_assets.sql to save assets.",
+        : isDirectSave
+          ? "Asset prepared, but it could not be saved to your workspace."
+          : "Asset generated. Apply migration 005_job_assets.sql to save assets.",
     });
   } catch {
     return NextResponse.json(

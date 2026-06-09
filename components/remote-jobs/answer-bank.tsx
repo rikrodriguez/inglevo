@@ -97,6 +97,15 @@ export function AnswerBank({
           sourceSessionId: answer.id,
           userRole: profile.role ?? "Professional",
           userGoal: profile.main_goal ?? "Get a remote job",
+          directTitle: `${answer.scenario} - improved answer`,
+          directContent: answer.improved_answer,
+          directRationale:
+            "Saved exactly from the improved answer bank version so the candidate can rehearse it and reuse it for remote job interviews.",
+          directTips: [
+            "Practice it naturally before using it live.",
+            "Keep examples truthful and specific.",
+            "Adjust the ending for each company or role.",
+          ],
           inputContext: `Question: ${answer.question}
 
 Original answer:
@@ -105,7 +114,7 @@ ${answer.user_answer}
 Improved answer:
 ${answer.improved_answer}
 
-Create a polished answer-bank asset that I can practice and reuse in remote job interviews.`,
+Save this exact answer-bank version as a job asset that I can practice and reuse in remote job interviews.`,
         }),
       });
       const data = (await response.json()) as { saved?: boolean; message?: string; error?: string };
@@ -192,7 +201,7 @@ Create a polished answer-bank asset that I can practice and reuse in remote job 
                     ? "Saving..."
                     : savedId === answer.id
                       ? "Saved"
-                      : "Improve & save asset"}
+                      : "Save exact asset"}
                   {savedId === answer.id ? <Check /> : <Sparkles />}
                 </Button>
               </div>

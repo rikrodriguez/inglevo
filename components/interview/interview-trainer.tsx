@@ -1,15 +1,26 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Bot, Mic, RotateCcw, Send, Square, TrendingUp, Volume2 } from "lucide-react";
+import {
+  Bot,
+  Check,
+  Mic,
+  RotateCcw,
+  Save,
+  Send,
+  Square,
+  TrendingUp,
+  Volume2,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { AnswerInput } from "@/components/interview/answer-input";
 import { FeedbackPanel } from "@/components/interview/feedback-panel";
 import { ScenarioSelector } from "@/components/interview/scenario-selector";
+import { meetingSimulationScenarios } from "@/data/ai-tutor-modules";
 import { interviewScenarios } from "@/data/interview-scenarios";
 import { trackEvent } from "@/lib/analytics";
-import type { CoachFeedback, Profile } from "@/types";
+import type { CoachFeedback, PracticeSession, Profile } from "@/types";
 
 type ApiResponse = {
   source: "mock" | "openai";
@@ -58,22 +69,47 @@ function getCurrentTimeMs() {
 
 const maxRecordingMs = 90_000;
 
-export function InterviewTrainer({ profile }: { profile: Profile }) {
+export function InterviewTrainer({
+  profile,
+  initialInputMode = "write",
+  initialVoicePracticeType = "speaking",
+  previousSessions = [],
+  freePracticeLimit,
+}: {
+  profile: Profile;
+  initialInputMode?: "write" | "speak";
+  initialVoicePracticeType?: "speaking" | "meeting";
+  previousSessions?: PracticeSession[];
+  freePracticeLimit?: number;
+}) {
+  const initialQuestion =
+    initialInputMode === "speak" && initialVoicePracticeType === "meeting"
+      ? meetingSimulationScenarios[0].prompt
+      : interviewScenarios[0].question;
   const [scenarioId, setScenarioId] = useState(interviewScenarios[0].id);
+  const [meetingScenarioId, setMeetingScenarioId] = useState(
+    meetingSimulationScenarios[0].id
+  );
   const [answer, setAnswer] = useState("");
   const [result, setResult] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [transcribing, setTranscribing] = useState(false);
   const [conversationLoading, setConversationLoading] = useState(false);
   const [recording, setRecording] = useState(false);
-  const [inputMode, setInputMode] = useState<"write" | "speak">("write");
+  const [inputMode, setInputMode] = useState<"write" | "speak">(initialInputMode);
+  const [voicePracticeType, setVoicePracticeType] = useState<"speaking" | "meeting">(
+    initialVoicePracticeType
+  );
   const [transcript, setTranscript] = useState("");
-  const [activeQuestion, setActiveQuestion] = useState(interviewScenarios[0].question);
+  const [activeQuestion, setActiveQuestion] = useState(initialQuestion);
   const [conversation, setConversation] = useState<ConversationMessage[]>(
-    createInitialConversation(interviewScenarios[0].question)
+    createInitialConversation(initialQuestion)
   );
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [savingAsset, setSavingAsset] = useState(false);
+  const [assetSaved, setAssetSaved] = useState(false);
+  const [assetError, setAssetError] = useState<string | null>(null);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<BlobPart[]>([]);
   const streamRef = useRef<MediaStream | null>(null);
@@ -85,6 +121,49 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
     () => interviewScenarios.find((item) => item.id === scenarioId) ?? interviewScenarios[0],
     [scenarioId]
   );
+  const meetingScenario = useMemo(
+    () =>
+      meetingSimulationScenarios.find((item) => item.id === meetingScenarioId) ??
+      meetingSimulationScenarios[0],
+    [meetingScenarioId]
+  );
+  const currentScenarioName =
+    inputMode === "speak" && voicePracticeType === "meeting"
+      ? `Meeting Simulation: ${meetingScenario.label}`
+      : scenario.scenario;
+  const sessionGoal =
+    inputMode === "speak" && voicePracticeType === "meeting"
+      ? meetingScenario.prompt
+      : inputMode === "speak"
+        ? "Improve delivery, pace, filler words, confidence markers and spoken structure without storing audio."
+        : scenario.goal;
+  const scenarioHistory = useMemo(() => {
+    const target = currentScenarioName.toLowerCase();
+
+    return previousSessions.filter((session) => {
+      const savedScenario = session.scenario.toLowerCase();
+
+      return savedScenario === target || savedScenario.includes(target);
+    });
+  }, [currentScenarioName, previousSessions]);
+  const bestScenarioScore = scenarioHistory.reduce<number | null>(
+    (best, session) => {
+      if (typeof session.overall_score !== "number") {
+        return best;
+      }
+
+      return best === null ? session.overall_score : Math.max(best, session.overall_score);
+    },
+    null
+  );
+  const latestScenarioScore =
+    typeof scenarioHistory[0]?.overall_score === "number"
+      ? scenarioHistory[0].overall_score
+      : null;
+  const practicesRemaining =
+    typeof freePracticeLimit === "number"
+      ? Math.max(0, freePracticeLimit - previousSessions.length)
+      : null;
 
   useEffect(() => {
     return () => {
@@ -106,10 +185,12 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
   async function analyze(
     answerOverride?: string,
     questionOverride?: string,
-    voiceMetrics?: VoiceMetrics
+    voiceMetrics?: VoiceMetrics,
+    scenarioOverride?: string
   ) {
     const answerToAnalyze = (answerOverride ?? answer).trim();
     const questionToAnalyze = questionOverride ?? scenario.question;
+    const scenarioToAnalyze = scenarioOverride ?? currentScenarioName;
 
     if (answerToAnalyze.length < 8) {
       setError("Write or record a slightly longer answer before analyzing.");
@@ -118,9 +199,11 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
 
     setLoading(true);
     setError(null);
+    setAssetError(null);
+    setAssetSaved(false);
     setResult(null);
     trackEvent("interview_started", {
-      scenario: scenario.scenario,
+      scenario: scenarioToAnalyze,
       mode: voiceMetrics ? "voice" : inputMode,
       question: questionToAnalyze,
     });
@@ -130,7 +213,7 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          scenario: scenario.scenario,
+          scenario: scenarioToAnalyze,
           question: questionToAnalyze,
           userAnswer: answerToAnalyze,
           userLevel: profile.english_level ?? "B1",
@@ -154,7 +237,7 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
 
       const feedbackData = data as ApiResponse;
       trackEvent("feedback_generated", {
-        scenario: scenario.scenario,
+        scenario: scenarioToAnalyze,
         mode: voiceMetrics ? "voice" : inputMode,
         source: feedbackData.source,
         overall_score: feedbackData.overallScore,
@@ -162,7 +245,7 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
       });
       if (feedbackData.saved) {
         trackEvent("practice_saved", {
-          scenario: scenario.scenario,
+          scenario: scenarioToAnalyze,
           mode: voiceMetrics ? "voice" : inputMode,
           overall_score: feedbackData.overallScore,
         });
@@ -199,6 +282,8 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
     setTranscript("");
     setResult(null);
     setError(null);
+    setAssetError(null);
+    setAssetSaved(false);
   }
 
   function resetConversation(question: string) {
@@ -209,8 +294,77 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
     setResult(null);
     setAttempts([]);
     setError(null);
+    setAssetError(null);
+    setAssetSaved(false);
     clearRecordingTimeout();
     recordingStartedAtRef.current = null;
+  }
+
+  async function saveImprovedAnswerAsset() {
+    if (!result?.improvedAnswer) {
+      return;
+    }
+
+    setSavingAsset(true);
+    setAssetError(null);
+
+    try {
+      const sourceAnswer = attempts[attempts.length - 1]?.answer ?? answer;
+      const sourceQuestion = inputMode === "speak" ? activeQuestion : scenario.question;
+      const response = await fetch("/api/remote-job-assets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          assetType: "interview_answer",
+          userRole: profile.role ?? "Professional",
+          userGoal: profile.main_goal ?? "Get a remote job",
+          directTitle: `${currentScenarioName} - improved answer`,
+          directContent: result.improvedAnswer,
+          directRationale:
+            "Saved exactly from the improved answer in AI Trainer so the candidate can rehearse it and reuse it without losing the strongest wording.",
+          directTips: [
+            "Practice it out loud until it sounds natural.",
+            "Keep the examples accurate to your real experience.",
+            "Adapt the final sentence to each role before using it.",
+          ],
+          inputContext: `Scenario: ${currentScenarioName}
+Question: ${sourceQuestion}
+
+Original answer:
+${sourceAnswer}
+
+Improved answer:
+${result.improvedAnswer}
+
+Save this exact improved version as a reusable Inglevo interview answer asset for a LATAM professional applying to US remote jobs.`,
+        }),
+      });
+      const data = (await response.json()) as {
+        saved?: boolean;
+        message?: string;
+        error?: string;
+      };
+
+      if (!response.ok || !data.saved) {
+        setAssetError(
+          data.error ??
+            data.message ??
+            "We could not save this answer as a job asset yet."
+        );
+        return;
+      }
+
+      setAssetSaved(true);
+      trackEvent("asset_created", {
+        asset_type: "interview_answer",
+        source: result.source,
+        saved: true,
+      });
+    } catch {
+      setAssetError("No pudimos guardar el asset. Intenta otra vez.");
+    } finally {
+      setSavingAsset(false);
+    }
   }
 
   async function startRecording() {
@@ -308,7 +462,8 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
   async function continueConversation(
     feedback: ApiResponse,
     spokenAnswer: string,
-    question: string
+    question: string,
+    scenarioName: string
   ) {
     setConversationLoading(true);
 
@@ -317,7 +472,7 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          scenario: scenario.scenario,
+          scenario: scenarioName,
           currentQuestion: question,
           userAnswer: spokenAnswer,
           improvedAnswer: feedback.improvedAnswer,
@@ -363,6 +518,7 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
     setTranscribing(true);
     setError(null);
     const questionForThisTurn = activeQuestion;
+    const scenarioForThisTurn = currentScenarioName;
     const durationSeconds = recordingStartedAtRef.current
       ? Math.max(
           1,
@@ -406,10 +562,15 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
       const feedback = await analyze(spokenTranscript, questionForThisTurn, {
         durationSeconds,
         source: "voice",
-      });
+      }, scenarioForThisTurn);
 
       if (feedback) {
-        await continueConversation(feedback, spokenTranscript, questionForThisTurn);
+        await continueConversation(
+          feedback,
+          spokenTranscript,
+          questionForThisTurn,
+          scenarioForThisTurn
+        );
       }
     } catch {
       setError("No pudimos enviar el audio. Intenta de nuevo o usa texto.");
@@ -428,27 +589,93 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
           const nextScenario =
             interviewScenarios.find((item) => item.id === id) ?? interviewScenarios[0];
           setScenarioId(id);
-          resetConversation(nextScenario.question);
+          if (voicePracticeType === "speaking") {
+            resetConversation(nextScenario.question);
+          }
         }}
       />
 
       <section className="grid gap-6">
         <div className="premium-panel">
-          <p className="section-kicker">Pregunta</p>
+          <p className="section-kicker">
+            {inputMode === "speak" && voicePracticeType === "meeting"
+              ? "Meeting Simulation"
+              : "Training Session"}
+          </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight">
             {inputMode === "speak" ? activeQuestion : scenario.question}
           </h1>
-          <p className="mt-3 text-muted-foreground">{scenario.goal}</p>
+          <div className="mt-4 rounded-xl border border-[#d0f5e3] bg-[#d0f5e3]/70 p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+              Session goal
+            </p>
+            <p className="mt-1 text-sm leading-6 text-black">{sessionGoal}</p>
+          </div>
+          <div className="mt-4 grid gap-3 rounded-xl border border-border bg-white p-4 text-sm sm:grid-cols-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                Scenario evidence
+              </p>
+              <p className="mt-1 font-medium">
+                {scenarioHistory.length
+                  ? `${scenarioHistory.length} saved ${scenarioHistory.length === 1 ? "practice" : "practices"}`
+                  : "No saved practice yet"}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                Best scenario score
+              </p>
+              <p className="mt-1 font-medium">
+                {bestScenarioScore === null ? "Not yet" : `${bestScenarioScore}/100`}
+              </p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                Practice room
+              </p>
+              <p className="mt-1 font-medium">
+                {practicesRemaining === null
+                  ? `${previousSessions.length} total practices`
+                  : `${practicesRemaining} free ${practicesRemaining === 1 ? "practice" : "practices"} left`}
+              </p>
+              {latestScenarioScore !== null ? (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Latest: {latestScenarioScore}/100
+                </p>
+              ) : null}
+            </div>
+          </div>
           {!result ? (
             <div className="mt-5 rounded-xl border border-dashed border-border bg-muted/40 p-4 text-sm text-muted-foreground">
-              Tip: responde en 4 a 6 frases. Abre con tu rol, agrega evidencia
-              concreta y cierra con el tipo de oportunidad remota que buscas.
+              <p className="font-medium text-foreground">Answer scaffold</p>
+              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                <p>
+                  <span className="font-semibold text-foreground">Role:</span>{" "}
+                  say what you do and who you help.
+                </p>
+                <p>
+                  <span className="font-semibold text-foreground">Evidence:</span>{" "}
+                  mention one real project, metric or responsibility.
+                </p>
+                <p>
+                  <span className="font-semibold text-foreground">Result:</span>{" "}
+                  explain the outcome or business value.
+                </p>
+                <p>
+                  <span className="font-semibold text-foreground">Remote fit:</span>{" "}
+                  show clear communication, ownership or async habits.
+                </p>
+              </div>
             </div>
           ) : null}
           <div className="mt-6 inline-flex rounded-xl border border-border bg-muted p-1">
             <button
               type="button"
-              onClick={() => setInputMode("write")}
+              onClick={() => {
+                setInputMode("write");
+                resetConversation(scenario.question);
+              }}
               className={`rounded-lg px-3 py-2 text-sm font-medium ${
                 inputMode === "write" ? "bg-white shadow-sm" : "text-muted-foreground"
               }`}
@@ -457,12 +684,19 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
             </button>
             <button
               type="button"
-              onClick={() => setInputMode("speak")}
+              onClick={() => {
+                setInputMode("speak");
+                resetConversation(
+                  voicePracticeType === "meeting"
+                    ? meetingScenario.prompt
+                    : scenario.question
+                );
+              }}
               className={`rounded-lg px-3 py-2 text-sm font-medium ${
                 inputMode === "speak" ? "bg-white shadow-sm" : "text-muted-foreground"
               }`}
             >
-              Speak with AI
+              Speaking Confidence
             </button>
           </div>
 
@@ -470,13 +704,74 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
             <AnswerInput value={answer} onChange={setAnswer} />
           ) : (
             <div className="mt-6 rounded-2xl border border-border/80 bg-muted/40 p-4">
+              <div className="mb-5 grid gap-2 sm:grid-cols-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setVoicePracticeType("speaking");
+                    resetConversation(scenario.question);
+                  }}
+                  className={`rounded-xl border p-3 text-left text-sm transition ${
+                    voicePracticeType === "speaking"
+                      ? "border-foreground bg-foreground text-background"
+                      : "border-border bg-white hover:bg-muted"
+                  }`}
+                >
+                  <span className="font-semibold">Speaking Confidence</span>
+                  <span className="mt-1 block text-xs opacity-75">
+                    Delivery, pace, filler words and spoken structure.
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setVoicePracticeType("meeting");
+                    resetConversation(meetingScenario.prompt);
+                  }}
+                  className={`rounded-xl border p-3 text-left text-sm transition ${
+                    voicePracticeType === "meeting"
+                      ? "border-foreground bg-foreground text-background"
+                      : "border-border bg-white hover:bg-muted"
+                  }`}
+                >
+                  <span className="font-semibold">Meeting Simulations</span>
+                  <span className="mt-1 block text-xs opacity-75">
+                    Standups, blockers, client calls and salary conversations.
+                  </span>
+                </button>
+              </div>
+              {voicePracticeType === "meeting" ? (
+                <div className="mb-5 flex gap-2 overflow-x-auto pb-1">
+                  {meetingSimulationScenarios.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => {
+                        setMeetingScenarioId(item.id);
+                        resetConversation(item.prompt);
+                      }}
+                      className={`shrink-0 rounded-full border px-3 py-2 text-sm transition ${
+                        item.id === meetingScenarioId
+                          ? "border-foreground bg-foreground text-background"
+                          : "border-border bg-white hover:bg-muted"
+                      }`}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <p className="font-medium">AI interview conversation</p>
+                  <p className="font-medium">
+                    {voicePracticeType === "meeting"
+                      ? "AI meeting simulation"
+                      : "AI speaking confidence practice"}
+                  </p>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    Speak with Inglevo like a real interview. The AI listens to
-                    your answer, evaluates it and asks a follow-up question. We
-                    do not store the audio.
+                    Speak with Inglevo like a real remote-work conversation.
+                    The AI evaluates the transcript and asks a follow-up. We do
+                    not store the audio.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -549,7 +844,7 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
               ) : null}
               {loading ? (
                 <p className="mt-3 text-sm text-muted-foreground">
-                  Checking clarity, structure, professional tone and readiness...
+                  Checking clarity, delivery, structure, professional tone and readiness...
                 </p>
               ) : null}
               {conversationLoading ? (
@@ -570,7 +865,14 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
           {error ? <p className="mt-3 text-sm text-black">{error}</p> : null}
           <div className="mt-5 flex flex-wrap gap-3">
             <Button
-              onClick={() => analyze()}
+              onClick={() =>
+                analyze(
+                  undefined,
+                  inputMode === "speak" ? activeQuestion : scenario.question,
+                  undefined,
+                  currentScenarioName
+                )
+              }
               disabled={
                 loading ||
                 transcribing ||
@@ -593,6 +895,34 @@ export function InterviewTrainer({ profile }: { profile: Profile }) {
                 Your score is under 75. Try again once using the improved answer
                 structure, but keep it natural and in your own words.
               </p>
+            </div>
+          ) : null}
+          {result ? (
+            <div className="mt-4 rounded-xl border border-border bg-muted/30 p-4">
+              <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <p className="font-semibold">Turn this into a job asset</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Save your strongest answer so it can support applications
+                    and your Inglevo Verification Profile.
+                  </p>
+                </div>
+                <Button
+                  type="button"
+                  onClick={saveImprovedAnswerAsset}
+                  disabled={savingAsset || assetSaved}
+                >
+                  {savingAsset
+                    ? "Saving..."
+                    : assetSaved
+                      ? "Saved as asset"
+                      : "Save strongest answer"}
+                  {assetSaved ? <Check /> : <Save />}
+                </Button>
+              </div>
+              {assetError ? (
+                <p className="mt-3 text-sm text-black">{assetError}</p>
+              ) : null}
             </div>
           ) : null}
         </div>
@@ -645,12 +975,29 @@ function FirstAttemptSummary({ attempt }: { attempt: Attempt }) {
     <section className="premium-panel">
       <div className="flex items-center gap-2">
         <TrendingUp className="size-5 text-black" />
-        <h2 className="text-xl font-semibold">Attempt 1 saved</h2>
+        <h2 className="text-xl font-semibold">Attempt 1 → Improved Answer</h2>
       </div>
       <p className="mt-2 text-sm text-muted-foreground">
-        Score: {attempt.result.overallScore}/100. Use Try again to create a second
-        attempt and compare your improvement.
+        Score: {attempt.result.overallScore}/100. Use the improved version,
+        practice again and create Attempt 2 to see your score delta.
       </p>
+      <div className="mt-4 grid gap-3 rounded-xl border border-border bg-muted/30 p-4 text-sm md:grid-cols-3">
+        <p>
+          <span className="font-semibold">1. Attempt 1</span>
+          <br />
+          Baseline answer saved.
+        </p>
+        <p>
+          <span className="font-semibold">2. Improved Answer</span>
+          <br />
+          Use the stronger structure.
+        </p>
+        <p>
+          <span className="font-semibold">3. Attempt 2</span>
+          <br />
+          Repeat to increase your score.
+        </p>
+      </div>
     </section>
   );
 }
@@ -681,7 +1028,9 @@ function RepeatComparison({
     <section className="premium-panel">
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <p className="text-sm font-medium text-muted-foreground">Repeat Mode</p>
+          <p className="text-sm font-medium text-muted-foreground">
+            Attempt 1 → Improved Answer → Attempt 2 → Score Delta
+          </p>
           <h2 className="mt-1 text-2xl font-semibold">
             Attempt {delta >= 0 ? "improved" : "changed"} by {delta >= 0 ? "+" : ""}
             {delta} points
