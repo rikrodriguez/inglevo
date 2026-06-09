@@ -125,7 +125,7 @@ export function createMockPracticeEvaluation({
       "Use a simple structure: situation, action, result and next step.",
     ],
     improved_answer:
-      `In my experience as a ${roleTitle.toLowerCase()}, I try to communicate clearly, understand the situation first, and take ownership of the next step. When a customer or team member needs help, I listen carefully, confirm the priority, explain what I can do, and follow up until the issue is resolved. This helps me stay professional and reliable in remote work situations.`,
+      `For a ${roleTitle.toLowerCase()} role, a stronger answer could be: I try to understand the situation first, communicate clearly, and take ownership of the next step. When a customer, client, manager or teammate needs help, I listen carefully, confirm the priority, explain what I can do, and follow up until the issue is resolved. This shows reliability and clear communication in remote work situations.`,
     suggested_phrases: [
       "In my previous experience, I helped...",
       "The main challenge was...",
