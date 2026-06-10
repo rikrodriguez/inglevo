@@ -11,6 +11,7 @@ import {
   Wrench,
 } from "lucide-react";
 
+import { VerifiedCandidatePipelineSection } from "@/components/landing/verified-candidate-pipeline-section";
 import { PublicFooter } from "@/components/shared/public-footer";
 import { PublicNav } from "@/components/shared/public-nav";
 import { Button } from "@/components/ui/button";
@@ -121,6 +122,8 @@ export default function HireLatamTalentPage() {
 
           <EmployerSearchMockup />
         </section>
+
+        <VerifiedCandidatePipelineSection />
 
         <section className="px-4 py-16 sm:px-6">
           <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-2 lg:grid-cols-4">

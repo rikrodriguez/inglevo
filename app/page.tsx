@@ -11,7 +11,6 @@ import {
   GraduationCap,
   Laptop,
   MessageSquareText,
-  Search,
   Send,
   ShieldCheck,
   Sparkles,
@@ -24,7 +23,6 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 
-import { InvestmentCalculator } from "@/components/landing/investment-calculator";
 import { PublicFooter } from "@/components/shared/public-footer";
 import { PublicNav } from "@/components/shared/public-nav";
 import { Button } from "@/components/ui/button";
@@ -38,14 +36,6 @@ const logos = [
   "Job CRM",
   "Application Assets",
   "Readiness Score",
-] as const;
-
-const processSteps = [
-  ["1", "Improve & verify your English", "AI-powered app to improve and verify your English for real work situations.", "See details"],
-  ["2", "Verify your remote setup", "We check your equipment, internet, workspace and availability.", "See details"],
-  ["3", "Verify your role tools", "We verify the tools you use for your role and daily responsibilities.", "See details"],
-  ["4", "Get your verified profile", "Receive your Inglevo profile and legally show it in your CV, LinkedIn and applications.", "See details"],
-  ["5", "APPLY STRONGER", "Use stronger trust signals when US companies review LATAM candidates.", "Start path"],
 ] as const;
 
 const customerJourney = [
@@ -77,13 +67,6 @@ const valueStack = [
   ["Job CRM", "Track applications, follow-ups, interviews and opportunities in one place.", BriefcaseBusiness],
   ["Marketplace Access", "See curated US remote opportunities and apply with your verified profile.", Globe2],
   ["Community Access", "Join role-based live calls and stay consistent while applying.", UsersRound],
-] as const;
-
-const stats = [
-  ["Timezone alignment", "Overlap with US working hours"],
-  ["USD opportunity gap", "Earn 2x-6x more with US remote jobs"],
-  ["Remote work growth", "+35% growth in remote roles since 2020"],
-  ["Verified candidates stand out", "Higher response rates from US companies"],
 ] as const;
 
 const rolePaths = [
@@ -273,19 +256,6 @@ const communityEvents = [
   ["US Hiring Q&A", "Sunday 5pm"],
 ] as const;
 
-const targetCompanies = [
-  "Google",
-  "Amazon",
-  "Microsoft",
-  "Apple",
-  "Meta",
-  "Salesforce",
-  "HubSpot",
-  "Shopify",
-  "Slack",
-  "Zoom",
-] as const;
-
 export default function Home() {
   return (
     <>
@@ -297,17 +267,13 @@ export default function Home() {
         <ValueStackSection />
         <PricingSection />
         <CareerInvestmentSection />
-        <InvestmentCalculator />
         <InglevoProfileSection />
-        <ProcessSection />
         <CustomerJourneySection />
         <ToolsSection />
-        <MarketOpportunity />
         <ComparisonAndRoles />
         <OldNewWayToggle />
         <MarketplaceSection />
         <CommunitySection />
-        <CompaniesSection />
         <TestimonialsSection />
         <FinalCta />
       </main>
@@ -789,34 +755,6 @@ function CandidateMatchMini() {
   );
 }
 
-function ProcessSection() {
-  return (
-    <section className="px-4 py-16 sm:px-6">
-      <div className="mx-auto max-w-7xl">
-        <h2 className="mx-auto max-w-2xl text-center text-4xl font-semibold leading-tight tracking-[-0.055em]">
-          The verification process to access <span className="text-[#6f45dd]">stronger USD opportunities</span>
-        </h2>
-        <div className="relative mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-          <div className="absolute left-0 right-0 top-6 hidden h-px bg-gradient-to-r from-transparent via-[#dfdbd6] to-transparent lg:block" />
-          {processSteps.map(([number, title, copy, cta], index) => (
-            <article key={title} className="relative">
-              <span className={`grid size-12 place-items-center rounded-full text-sm font-semibold text-white shadow-lg ${index === 0 ? "bg-[#6f45dd]" : index === 1 ? "bg-[#5f8ef7]" : index === 2 ? "bg-emerald-500" : index === 3 ? "bg-[#58b98f]" : "bg-[linear-gradient(135deg,#7459f6,#5fb7f7,#de61bf)]"}`}>
-                {number}
-              </span>
-              <h3 className={`mt-8 font-semibold leading-tight tracking-[-0.04em] ${title === "APPLY STRONGER" ? "text-xl text-[#6f45dd]" : "text-base"}`}>{title}</h3>
-              <p className="mt-3 text-sm leading-6 text-neutral-600">{copy}</p>
-              <Link href="/signup" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#4f46e5]">
-                {cta}
-                <ArrowRight className="size-4" />
-              </Link>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function CustomerJourneySection() {
   return (
     <section className="bg-[#f4f2ef] px-4 py-20 sm:px-6">
@@ -1135,34 +1073,6 @@ function ToolMockup({ title, icon }: { title: string; icon: ReactNode }) {
         </div>
       </div>
     </div>
-  );
-}
-
-function MarketOpportunity() {
-  return (
-    <section className="px-4 py-14 sm:px-6">
-      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
-        <div>
-          <h2 className="text-4xl font-semibold leading-tight tracking-[-0.055em]">
-            LATAM talent. <br /> Global opportunity.
-          </h2>
-          <p className="mt-4 max-w-sm text-sm leading-6 text-neutral-600">
-            The numbers show the opportunity. Inglevo helps you get ready for it.
-          </p>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {stats.map(([title, copy], index) => (
-            <article key={title} className="rounded-3xl border border-black/5 bg-white p-6 shadow-[0_18px_60px_rgba(30,27,75,0.055)]">
-              <p className="text-3xl font-semibold tracking-[-0.06em] text-[#6f45dd]">
-                {index === 0 ? "85%" : index === 1 ? "USD $50K+" : index === 2 ? "+35%" : "48%"}
-              </p>
-              <h3 className="mt-5 text-sm font-semibold">{title}</h3>
-              <p className="mt-2 text-xs leading-5 text-neutral-500">{copy}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -1494,232 +1404,6 @@ function CareerInvestmentSection() {
         </p>
       </div>
     </section>
-  );
-}
-
-function CompaniesSection() {
-  const filters = ["English 80+", "Setup verified", "Role match", "EST overlap"];
-  const candidates = [
-    ["Ana Torres", "Customer Support", "84/100"],
-    ["Mateo Ruiz", "Project Manager", "81/100"],
-    ["Camila Vega", "Sales Rep", "78/100"],
-  ] as const;
-
-  return (
-    <section className="px-4 py-20 sm:px-6">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-10 rounded-[2rem] border border-black/5 bg-white p-7 shadow-[0_24px_90px_rgba(30,27,75,0.07)] sm:p-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-500">
-              For companies
-            </p>
-            <h2 className="mt-6 max-w-xl text-4xl font-semibold leading-[0.98] tracking-[-0.065em] sm:text-6xl">
-              Need verified LATAM candidates?
-            </h2>
-            <div className="mt-8 grid gap-4">
-              {[
-                "pre-checked English",
-                "remote setup signals",
-                "role tools verification",
-                "public verification profiles",
-                "less wasted interviews",
-                "better filtering",
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-4 text-lg font-semibold">
-                  <Check className="size-5" />
-                  {item}
-                </div>
-              ))}
-            </div>
-            <Button asChild className="mt-9 h-12 rounded-full bg-[linear-gradient(135deg,#6f45dd,#5fb7f7,#d95dbc)] px-7 text-white">
-              <Link href="/employers">
-                More Info
-                <ArrowRight className="size-4" />
-              </Link>
-            </Button>
-          </div>
-          <div className="rounded-[2rem] bg-[linear-gradient(135deg,#f6f2ff,#ffffff)] p-3 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.04)] sm:p-6">
-            <div className="rounded-[1.7rem] bg-white p-4 shadow-[0_22px_70px_rgba(30,27,75,0.08)] sm:p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-500">
-                    Employer Dashboard
-                  </p>
-                  <h3 className="mt-3 text-3xl font-semibold tracking-[-0.055em] sm:text-4xl">
-                    Verified candidate pipeline
-                  </h3>
-                </div>
-                <Search className="hidden size-10 sm:block" />
-              </div>
-              <div className="mt-8 grid gap-5 lg:grid-cols-[230px_1fr]">
-                <div className="rounded-3xl bg-[#f8f8f7] p-5">
-                  <p className="font-semibold">Filters</p>
-                  <div className="mt-5 grid gap-3">
-                    {filters.map((filter) => (
-                      <span key={filter} className="rounded-full bg-white px-4 py-3 text-sm font-semibold">
-                        {filter}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="grid gap-4">
-                  {candidates.map(([name, role, score]) => (
-                    <div key={name} className="flex items-center gap-3 rounded-3xl border border-black/10 bg-white p-4 sm:gap-4 sm:p-5">
-                      <ProfilePhoto name={name} />
-                      <div className="flex-1">
-                        <p className="text-base font-semibold tracking-[-0.04em] sm:text-xl">{name}</p>
-                        <p className="text-sm text-neutral-500">{role} · LATAM</p>
-                      </div>
-                      <span className="rounded-full bg-[#d0f5e3] px-3 py-2 text-xs font-semibold sm:px-4 sm:text-sm">
-                        {score}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <CompanyLogoCollage />
-      </div>
-    </section>
-  );
-}
-
-function CompanyLogoCollage() {
-  return (
-    <div className="mt-8 rounded-[2rem] border border-black/5 bg-white/85 p-6 shadow-[0_24px_90px_rgba(30,27,75,0.055)]">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-neutral-500">
-            Target US companies
-          </p>
-          <h3 className="mt-2 text-3xl font-semibold tracking-[-0.045em]">
-            Prepare for the companies LATAM talent wants to reach.
-          </h3>
-        </div>
-      </div>
-      <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-        {targetCompanies.map((company) => (
-          <div
-            key={company}
-            className="grid min-h-28 place-items-center rounded-3xl border border-black/10 bg-[#fbfbfa] p-5 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(30,27,75,0.08)]"
-          >
-            <CompanyWordmark company={company} />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function CompanyWordmark({ company }: { company: (typeof targetCompanies)[number] }) {
-  if (company === "Google") {
-    const letters = [
-      ["G", "#4285F4"],
-      ["o", "#DB4437"],
-      ["o", "#F4B400"],
-      ["g", "#4285F4"],
-      ["l", "#0F9D58"],
-      ["e", "#DB4437"],
-    ] as const;
-
-    return (
-      <span className="text-3xl font-bold tracking-[-0.08em]">
-        {letters.map(([letter, color], index) => (
-          <span key={`${letter}-${index}`} style={{ color }}>
-            {letter}
-          </span>
-        ))}
-      </span>
-    );
-  }
-
-  if (company === "Amazon") {
-    return (
-      <span className="relative pb-3 text-3xl font-bold tracking-[-0.08em] text-[#111827]">
-        amazon
-        <span className="absolute bottom-0 left-7 h-3 w-16 rounded-[50%] border-b-[3px] border-[#ff9900]" />
-      </span>
-    );
-  }
-
-  if (company === "Microsoft") {
-    return (
-      <span className="flex items-center gap-3 text-2xl font-semibold tracking-[-0.04em] text-[#5e5e5e]">
-        <span className="grid size-7 grid-cols-2 gap-1">
-          <span className="bg-[#f25022]" />
-          <span className="bg-[#7fba00]" />
-          <span className="bg-[#00a4ef]" />
-          <span className="bg-[#ffb900]" />
-        </span>
-        Microsoft
-      </span>
-    );
-  }
-
-  if (company === "Apple") {
-    return (
-      <span className="text-3xl font-semibold tracking-[-0.06em] text-black">
-        Apple
-      </span>
-    );
-  }
-
-  if (company === "Meta") {
-    return (
-      <span className="flex items-center gap-2 text-3xl font-semibold tracking-[-0.06em] text-[#0467df]">
-        <span className="text-4xl leading-none">∞</span>
-        Meta
-      </span>
-    );
-  }
-
-  if (company === "Salesforce") {
-    return (
-      <span className="rounded-full bg-[#00a1e0] px-5 py-3 text-2xl font-bold tracking-[-0.08em] text-white">
-        salesforce
-      </span>
-    );
-  }
-
-  if (company === "HubSpot") {
-    return (
-      <span className="flex items-center gap-2 text-2xl font-bold tracking-[-0.05em] text-[#ff5c35]">
-        <span className="relative grid size-7 place-items-center rounded-full border-4 border-current">
-          <span className="absolute -right-2 -top-2 size-3 rounded-full bg-current" />
-        </span>
-        HubSpot
-      </span>
-    );
-  }
-
-  if (company === "Shopify") {
-    return (
-      <span className="text-3xl font-extrabold tracking-[-0.06em] text-[#95bf47]">
-        Shopify
-      </span>
-    );
-  }
-
-  if (company === "Slack") {
-    return (
-      <span className="flex items-center gap-3 text-3xl font-bold tracking-[-0.07em] text-[#1d1c1d]">
-        <span className="grid size-7 grid-cols-2 gap-1">
-          <span className="rounded-full bg-[#36c5f0]" />
-          <span className="rounded-full bg-[#2eb67d]" />
-          <span className="rounded-full bg-[#ecb22e]" />
-          <span className="rounded-full bg-[#e01e5a]" />
-        </span>
-        Slack
-      </span>
-    );
-  }
-
-  return (
-    <span className="rounded-2xl bg-[#2d8cff] px-5 py-3 text-3xl font-bold tracking-[-0.08em] text-white">
-      Zoom
-    </span>
   );
 }
 
